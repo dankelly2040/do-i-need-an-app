@@ -1,0 +1,103 @@
+{
+  "source": {
+    "database": "Mobile App Business Cases by Industry",
+    "databaseId": "84b4f706-3ae1-4868-8044-6c4806ba632f",
+    "dataSourceId": "cbd5c916-c0a4-4174-bfd4-9070568c8c60",
+    "url": "https://app.notion.com/p/84b4f7063ae1486880446c4806ba632f",
+    "syncedAt": "2026-07-29",
+    "note": "Snapshot of the rows that map to the industries this tool offers. The full table has 27 rows; re-sync with scripts/sync-notion.mjs."
+  },
+  "rows": [
+    {
+      "industry": "QSR / Food & Beverage / Restaurants",
+      "roi": "Revenue lift",
+      "metrics": "Starbucks: 30M+ mobile users, $1.77B in unused pre-loaded app funds (2024); mobile = ~60% of digital restaurant orders (NPD); 70% of consumers prefer a custom app over third-party; full-service digital orders +237% (2020-2021).",
+      "why": "Order-ahead throughput, loyalty stickiness, higher visit frequency, prepaid float, and first-party data ownership vs third-party aggregators.",
+      "considerations": "Balancing an owned app vs third-party delivery (DoorDash/Uber Eats). Loyalty is the key differentiator and margin protector."
+    },
+    {
+      "industry": "Retail (Physical / Omnichannel / Grocery)",
+      "roi": "Revenue lift",
+      "metrics": "Omnichannel customers spend ~16% more per order and deliver 30% higher lifetime ROI; 91% of shoppers are omnichannel; omnichannel retains 89% of customers vs 33% single-channel; Target digital sales +34% (2023); retail apps show 35-45% monthly return rate vs 15-25% mobile web.",
+      "why": "Omnichannel shoppers spend more and are far more loyal; the app bridges in-store and online and unlocks retail-media monetization.",
+      "considerations": "Integrating POS/loyalty/inventory; driving install at point of sale."
+    },
+    {
+      "industry": "E-Commerce / Online Retail / Marketplaces",
+      "roi": "Revenue lift",
+      "metrics": "App CLV 2.8-5x web-only (MobiLoud); app users purchase ~33% more often; 60% of app customers buy multiple times/yr vs 40% mobile web; Criteo: 18% in-app conversion vs 4% mobile web; mobile cart abandonment ~83.6% (Q3 2024).",
+      "why": "Higher conversion, higher repeat-purchase rate, higher LTV, a direct owned push channel, and frictionless saved-payment checkout. Web acquires, the app retains and monetizes your best customers.",
+      "considerations": "Not every visitor installs; app is a retention layer on top of web acquisition. ASO and attribution differ from web SEO/SEM."
+    },
+    {
+      "industry": "B2B / SaaS / Enterprise / Field Service",
+      "roi": "Cost-to-serve",
+      "metrics": "75% of field service companies using mobile report higher staff productivity; mobile FSM can cut operational costs up to 20% (Aberdeen); firms with 50-99 techs see ~26% productivity improvement; FSM market ~$6.2B in 2026, growing ~16%/yr.",
+      "why": "Mobile workforce productivity, offline access, real-time job/data sync, faster first-time fix, and in-field payments.",
+      "considerations": "Integration with ERP/CRM; offline reliability; workforce training."
+    },
+    {
+      "industry": "Fitness / Wellness / Health & Fitness",
+      "roi": "Engagement/Habit",
+      "metrics": "74%+ of Americans use at least one fitness app; AI-personalized fitness apps have 50% higher retention; subscription apps have 30% higher engagement than free; social sharing boosts engagement 22%; annual plans show 40-60% better retention than monthly.",
+      "why": "Habit formation, subscription revenue, wearable integration, personalization, and community.",
+      "considerations": "Notoriously steep churn (~7% at Day 30 industry-wide); habit loop and hardware anchoring are critical."
+    },
+    {
+      "industry": "Loyalty / Membership / Subscription",
+      "roi": "Engagement/Habit",
+      "metrics": "Amazon Prime members spend ~2x non-members and renew ~93% after Year 1; Sephora Beauty Insider (40-46M members) drives ~80% of NA sales; Ulta Ultamate Rewards (~44.6M) generates >95% of revenue; loyalty programs generate ~5.2x more revenue than they cost (Antavo).",
+      "why": "Members spend multiples more, renew at very high rates, and generate first-party data. The app is the loyalty vehicle.",
+      "considerations": "Reward-cost economics; avoiding point devaluation; omnichannel integration."
+    },
+    {
+      "industry": "Nonprofit / Fundraising",
+      "roi": "Revenue lift",
+      "metrics": "25% of donors complete donations on mobile; mobile-responsive sites increase donations ~126%; average text-to-give donation $107, average mobile pledge $167; online giving ~30% of all charitable giving (2024); 84% of millennials prefer mobile giving.",
+      "why": "Mobile giving convenience, recurring donor management, event/auction tools, and younger-donor reach.",
+      "considerations": "Many stats from vendor aggregations; budget constraints; donor retention (~26%)."
+    },
+    {
+      "industry": "Church / Faith Community",
+      "roi": "Engagement/Habit",
+      "metrics": "YouVersion, built by Life.Church (a congregation, not a vendor): 1B+ installs, 71.3M installs in 2025 (+12% YoY), daily usage +18% YoY, 100M+ MAU, 1.67B highlights/bookmarks/notes in 2025 — first-party and specific, high weight. One church reported digital giving +60% in six months after adopting Pushpay — single vendor case study, low weight, do not lead with it. GAPS: no reliable figure yet for the share of US congregations with an app, or app-vs-web giving conversion for churches; needs Barna or Pew, not vendor blogs.",
+      "why": "Keeps the congregation connected between Sundays — the job is midweek engagement and newcomer retention, not transactions. Giving follows attendance and habit rather than leading it, so donations are the downstream effect of engagement, not the pitch. Also the clearest \"you don't need an app\" vertical: a congregation under ~200 weekly attendance with no media library gets more from a good mobile site plus text-to-give.",
+      "considerations": "Two buyers get conflated here: congregations building their own app vs. church-management SaaS — the latter is vertical SaaS and belongs in the software row. Congregations typically have no dev staff and volunteer-run tech, so buy-vs-build is the real first question. Confirm current App Store rules on charitable donations before promising in-app giving. Seasonal spikes at Christmas and Easter; multi-campus and multilingual are common; kids check-in touches minors' data."
+    },
+    {
+      "industry": "Healthcare / Telehealth / Digital Health / Pharma",
+      "roi": "Cost-to-serve",
+      "metrics": "~54% of Americans used telehealth in the past year (2025); 71.4% of physicians used telehealth weekly in 2024 (AMA, up from 25.1% in 2018); 68% of patients prefer telehealth flexibility; market projected to $459.8B by 2030.",
+      "why": "Access/convenience, chronic-care management, medication adherence, remote monitoring, and reduced no-shows.",
+      "considerations": "HIPAA/privacy, reimbursement uncertainty, technical issues in ~40% of encounters, not suitable for all specialties."
+    },
+    {
+      "industry": "Professional Services",
+      "roi": "Cost-to-serve",
+      "metrics": "Professionals spend ~28% of time managing email and ~20% searching for information (McKinsey); firms consolidating onto portals cut software spend ~40%; a regional accounting firm saw 40% fewer emails during tax season after adopting a portal (Moxo).",
+      "why": "Client-portal apps reduce email overhead, speed document/payment cycles, professionalize the brand, and improve client retention.",
+      "considerations": "Client adoption; security/compliance; most figures are SMB-firm vendor data."
+    },
+    {
+      "industry": "Education / EdTech / E-Learning",
+      "roi": "Engagement/Habit",
+      "metrics": "Duolingo ~103M MAU with 32% daily engagement and 950M+ downloads; gamification cut its churn to 28% (lowest among peers vs Babbel 58%); e-learning market projected to $1.52T by 2033 (17.35% CAGR); education Day 30 retention among the lowest (~2-3%).",
+      "why": "Gamification drives a daily habit; subscription monetization; large TAM; accessibility.",
+      "considerations": "Low baseline retention; requires strong habit and community design."
+    },
+    {
+      "industry": "Media & Entertainment / Streaming / News / Publishing",
+      "roi": "Engagement/Habit",
+      "metrics": "Entertainment apps convert ~233% higher than mobile web (vendor benchmark); Netflix ~277.6M subs (2024), 1,300 recommendation clusters; streaming = 40% of US TV time (Nielsen); news apps have highest D1 retention (iOS ~35.9%); Spotify ~626M+ MAU.",
+      "why": "Engagement and time-spent drive retention and ad/subscription revenue; personalization and offline downloads deepen the habit.",
+      "considerations": "Churn management; Apple/Google ~30% platform fees on in-app subscriptions."
+    },
+    {
+      "industry": "Sports / Live Events / Ticketing",
+      "roi": "Revenue lift",
+      "metrics": "Fans who favorite events in-app spend 2.2x higher GTV (Ticketmaster); Man City app hit 3M downloads in 2 yrs (largest owned channel), app-driven revenue +30% YoY, 1.2M active loyalty members; off-season engagement drives 40% spend premium.",
+      "why": "Mobile-first entry, higher per-cap spending, fan engagement/loyalty, a data flywheel, and a secondary market.",
+      "considerations": "Peak-load scalability on match days; fraud prevention; tech-adoption resistance among some fans."
+    }
+  ]
+}

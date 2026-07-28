@@ -99,6 +99,34 @@ function scoreUseCase(uc, text, industry) {
 
 function titleFirst(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+// Pull the real rows from the research table for a picker industry. Claims are
+// ordered so the best sourced ones lead, which is what the table's own weight
+// guidance asks for.
+var CONF_RANK = { strong: 0, directional: 1, vendor: 2 };
+function researchFor(industry) {
+  if (typeof RESEARCH === "undefined") return null;
+  var ind = INDUSTRIES.filter(function (i) { return i.key === industry; })[0];
+  var wanted = (ind && ind.notionRows) || [];
+  var rows = RESEARCH.industries.filter(function (r) { return wanted.indexOf(r.industry) !== -1; });
+  if (!rows.length) return null;
+  var claims = [];
+  rows.forEach(function (r) {
+    r.claims.forEach(function (c) {
+      if (!claims.some(function (x) { return x.claim === c.claim; })) claims.push(c);
+    });
+  });
+  claims.sort(function (a, b) { return CONF_RANK[a.confidence] - CONF_RANK[b.confidence]; });
+  return {
+    rows: rows.map(function (r) {
+      return { industry: r.industry, roi: r.roi, why: r.why, considerations: r.considerations, gap: r.gap };
+    }),
+    claims: claims,
+    syncedAt: RESEARCH.source.syncedAt,
+    sourceUrl: RESEARCH.source.url,
+    database: RESEARCH.source.database
+  };
+}
+
 function assess(input) {
   var industry = input.industry || "other";
   var text = normalise(input.description);

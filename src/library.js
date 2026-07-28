@@ -11,17 +11,17 @@
    ============================================================ */
 
 var INDUSTRIES = [
-  { key: "qsr", label: "Food, drink, cafés", short: "Food", persona: "roastery", icon: "coffee", appLabel: "Your café", noun: "café or food business" },
-  { key: "retail", label: "Retail and grocery", short: "Retail", persona: "roastery", icon: "shopping-bag", appLabel: "Your shop", noun: "retail business" },
-  { key: "trades", label: "Trades and home services", short: "Trades", persona: "hvac", icon: "wrench", appLabel: "Field ops", noun: "trades or home services business" },
-  { key: "fitness", label: "Fitness and studios", short: "Fitness", persona: "roastery", icon: "dumbbell", appLabel: "Your studio", noun: "fitness studio" },
-  { key: "nonprofit", label: "Nonprofit", short: "Nonprofit", persona: "roastery", icon: "heart-handshake", appLabel: "Your charity", noun: "nonprofit" },
-  { key: "faith", label: "Faith community", short: "Faith", persona: "roastery", icon: "church", appLabel: "Your church", noun: "faith community" },
-  { key: "b2b", label: "B2B and field service", short: "B2B", persona: "hvac", icon: "hard-hat", appLabel: "Client portal", noun: "B2B or field service business" },
-  { key: "health", label: "Healthcare and clinics", short: "Health", persona: "hvac", icon: "stethoscope", appLabel: "Your practice", noun: "healthcare practice" },
-  { key: "creator", label: "Solo creator or coach", short: "Creator", persona: "photographer", icon: "mic", appLabel: "Your studio", noun: "solo creator or coach" },
-  { key: "events", label: "Events and ticketing", short: "Events", persona: "roastery", icon: "ticket", appLabel: "Your events", noun: "events business" },
-  { key: "other", label: "Something else", short: "Other", persona: "roastery", icon: "shapes", appLabel: "Your app", noun: "business" }
+  { key: "qsr", label: "Food, drink, cafés", short: "Food", persona: "roastery", icon: "coffee", appLabel: "Your café", noun: "café or food business", notionRows: ["QSR / Food & Beverage / Restaurants"] },
+  { key: "retail", label: "Retail and grocery", short: "Retail", persona: "roastery", icon: "shopping-bag", appLabel: "Your shop", noun: "retail business", notionRows: ["Retail (Physical / Omnichannel / Grocery)","E-Commerce / Online Retail / Marketplaces"] },
+  { key: "trades", label: "Trades and home services", short: "Trades", persona: "hvac", icon: "wrench", appLabel: "Field ops", noun: "trades or home services business", notionRows: ["B2B / SaaS / Enterprise / Field Service"] },
+  { key: "fitness", label: "Fitness and studios", short: "Fitness", persona: "roastery", icon: "dumbbell", appLabel: "Your studio", noun: "fitness studio", notionRows: ["Fitness / Wellness / Health & Fitness","Loyalty / Membership / Subscription"] },
+  { key: "nonprofit", label: "Nonprofit", short: "Nonprofit", persona: "roastery", icon: "heart-handshake", appLabel: "Your charity", noun: "nonprofit", notionRows: ["Nonprofit / Fundraising"] },
+  { key: "faith", label: "Faith community", short: "Faith", persona: "roastery", icon: "church", appLabel: "Your church", noun: "faith community", notionRows: ["Church / Faith Community","Nonprofit / Fundraising"] },
+  { key: "b2b", label: "B2B and field service", short: "B2B", persona: "hvac", icon: "hard-hat", appLabel: "Client portal", noun: "B2B or field service business", notionRows: ["B2B / SaaS / Enterprise / Field Service","Professional Services"] },
+  { key: "health", label: "Healthcare and clinics", short: "Health", persona: "hvac", icon: "stethoscope", appLabel: "Your practice", noun: "healthcare practice", notionRows: ["Healthcare / Telehealth / Digital Health / Pharma"] },
+  { key: "creator", label: "Solo creator or coach", short: "Creator", persona: "photographer", icon: "mic", appLabel: "Your studio", noun: "solo creator or coach", notionRows: ["Education / EdTech / E-Learning","Media & Entertainment / Streaming / News / Publishing"] },
+  { key: "events", label: "Events and ticketing", short: "Events", persona: "roastery", icon: "ticket", appLabel: "Your events", noun: "events business", notionRows: ["Sports / Live Events / Ticketing"] },
+  { key: "other", label: "Something else", short: "Other", persona: "roastery", icon: "shapes", appLabel: "Your app", noun: "business", notionRows: ["Loyalty / Membership / Subscription"] }
 ];
 
 var LIBRARY = {
@@ -400,3 +400,11 @@ var SERVICE_NOTES = {
   "EAS Submit": "For App Store and Play Store submission when phase one is ready.",
   "EAS Workflows": "Add continuous integration under .eas/workflows for a multi phase build."
 };
+
+/* Teaser phones on the intake page, so the rail shows breadth rather than
+   only the coffee example. */
+var TEASERS = [
+  { id: "uc.digital-loyalty", caption: "Every answer comes with the screens, not a report. This one belongs to a coffee roastery." },
+  { id: "uc.offline-field-capture", caption: "An internal one. This crew works in basements, so the app has to hold the job until signal comes back." },
+  { id: "uc.class-booking", caption: "A yoga studio, where the front desk stopped being the booking system." }
+];

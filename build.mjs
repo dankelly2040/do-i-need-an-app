@@ -50,7 +50,7 @@ let src = await readFile(SRC, "utf8");
 
 // Inline each module in place of its <script src>, so dist is one file with
 // no extra requests and no broken relative paths.
-for (const name of ["icons.js", "library.js", "matcher.js"]) {
+for (const name of ["icons.js", "library.js", "research.generated.js", "matcher.js"]) {
   const tag = new RegExp(`<script src="${name.replace(".", "\\.")}"></script>`);
   if (!tag.test(src)) throw new Error(`src/page.html no longer references ${name}`);
   const js = await readFile(new URL(`./src/${name}`, import.meta.url), "utf8");
@@ -104,7 +104,7 @@ ${body}
 // the page shipped rendering nothing, with no console error to find.
 {
   const scripts = [...doc.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  if (scripts.length < 4) throw new Error(`expected 4 inline scripts, found ${scripts.length}`);
+  if (scripts.length < 5) throw new Error(`expected 5 inline scripts, found ${scripts.length}`);
 
   const noop = () => {};
   const stubEl = {

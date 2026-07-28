@@ -107,7 +107,7 @@ svg { display: block; }
 
 /* ---------- intake A ---------- */
 
-.intake-a { padding: 84px 0 0; display: grid; grid-template-columns: minmax(0, 1.05fr) 380px; gap: 64px; align-items: start; }
+.intake-a { padding: 84px 0 120px; display: grid; grid-template-columns: minmax(0, 1.05fr) 380px; gap: 64px; align-items: start; }
 @media (max-width: 1000px) { .intake-a { grid-template-columns: minmax(0, 1fr); gap: 48px; } .intake-a .rail-phone { display: none; } }
 .hero-h1 { font-size: clamp(44px, 5.6vw, 68px); font-weight: 700; letter-spacing: -2.4px; line-height: 1.02; margin: 18px 0 22px; max-width: 17ch; text-wrap: balance; }
 .hero-lede { font-size: 19px; line-height: 1.55; color: var(--ink-2); max-width: 46ch; }
@@ -149,12 +149,18 @@ svg { display: block; }
 .chip-btn[aria-pressed="true"] { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-ink); }
 
 .rail-phone { position: sticky; top: 100px; display: grid; gap: 18px; justify-items: center; padding-top: 34px; }
+.teaser-nav { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.teaser-dot { display: flex; align-items: center; gap: 6px; font-family: inherit; font-size: 12px; font-weight: 500; background: transparent; border: 1px solid var(--line-2); color: var(--ink-3); padding: 4px 11px; border-radius: 999px; cursor: pointer; }
+.teaser-dot span { width: 6px; height: 6px; border-radius: 50%; background: var(--line-2); flex: none; }
+.teaser-dot:hover { border-color: var(--accent); color: var(--accent-ink); }
+.teaser-dot[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+.teaser-dot[aria-pressed="true"] span { background: var(--accent); }
 .rail-caption { font-size: 13.5px; color: var(--ink-3); text-align: center; max-width: 30ch; }
 .tilt { transform: rotate(-3deg); }
 
 /* ---------- intake B ---------- */
 
-.intake-b { padding: 110px 0 90px; max-width: 900px; }
+.intake-b { padding: 110px 0 140px; max-width: 900px; }
 .console-meta { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); margin-bottom: 30px; }
 .dot-good { width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
 .hero-h1-b { font-size: clamp(48px, 7vw, 92px); font-weight: 800; letter-spacing: -3.6px; line-height: .98; max-width: 18ch; }
@@ -316,6 +322,19 @@ svg { display: block; }
 .conf[data-l="vendor"] { background: var(--sunken); color: var(--ink-3); }
 .receipt-src { font-size: 11.5px; color: var(--ink-4); }
 
+.research { display: grid; gap: 14px; margin-top: 18px; }
+.research-row { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; }
+.research-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.research-name { font-size: 15px; font-weight: 600; }
+.research-roi { font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent-soft); padding: 3px 9px; border-radius: 6px; }
+.research-why { font-size: 15.5px; line-height: 1.55; color: var(--ink-2); max-width: 74ch; }
+.research-cells { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 16px; }
+.research-cell { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; }
+.research-cell p:last-child { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+.research-cell.gap { background: var(--warn-soft); border: 1px solid var(--warn); }
+.research-cell.gap .label-xs { color: var(--warn-ink); }
+.research-foot { font-size: 13px; color: var(--ink-4); margin-top: 4px; }
+
 /* ---------- handoff ---------- */
 
 .handoff { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-sm); }
@@ -338,7 +357,7 @@ svg { display: block; }
 .capture-row input { flex: 1 1 22ch; font-family: inherit; font-size: 16px; padding: 12px 15px; background: var(--surface); border: 1px solid var(--line-2); color: var(--ink); border-radius: 12px; }
 .capture-row input:focus { outline: none; border-color: var(--accent); }
 .capture-msg { font-size: 13.5px; color: var(--ink-3); }
-.colophon { border-top: 1px solid var(--line); margin-top: 56px; padding: 24px 0 60px; font-size: 13.5px; color: var(--ink-3); max-width: 74ch; }
+.colophon { border-top: 1px solid var(--line); margin-top: 56px; padding: 24px 0 140px; font-size: 13.5px; color: var(--ink-3); max-width: 74ch; }
 
 /* ---------- phone mock ---------- */
 
@@ -387,6 +406,7 @@ svg { display: block; }
 
 <script src="icons.js"></script>
 <script src="library.js"></script>
+<script src="research.generated.js"></script>
 <script src="matcher.js"></script>
 <script>
 (function () {
@@ -578,9 +598,9 @@ svg { display: block; }
      ============================================================ */
 
   var S = {
-    dir: "a", step: "intake", persona: null, industry: "", description: "", website: "",
+    dir: "a", step: "intake", persona: null, industry: "", description: "", website: "", teaser: 0,
     ticks: {}, stamps: {}, steps: [], siteHost: "", result: null, activeIdx: 0,
-    openWhy: false, openReceipts: false, openPhase: null,
+    openWhy: false, openReceipts: false, openResearch: false, openPhase: null,
     footNote: "Takes about fifteen seconds.", copied: false,
     email: "", emailMsg: "", emailSent: false, revealMs: 4200
   };
@@ -618,7 +638,7 @@ svg { display: block; }
     steps.push(["match", "Matched 24 use cases, 8 anti patterns"], ["rank", "Ranked and drew the screens"]);
     set({
       step: "thinking", result: p, steps: steps, siteHost: host, ticks: {}, stamps: {},
-      activeIdx: 0, openWhy: false, openReceipts: false, openPhase: null, copied: false,
+      activeIdx: 0, openWhy: false, openReceipts: false, openResearch: false, openPhase: null, copied: false,
       email: "", emailMsg: "", emailSent: false
     });
     var n = steps.length;
@@ -663,7 +683,7 @@ svg { display: block; }
   function intakeA() {
     var filled = S.website.trim() ? " filled" : "";
     var h = ['<main class="shell"><section class="intake-a"><div>'];
-    h.push('<h1 class="hero-h1">Should your business have an app?</h1>');
+    h.push('<h1 class="hero-h1">Should your business have a mobile app?</h1>');
     h.push('<p class="hero-lede">Tell us what you do. Fifteen seconds later you get:</p>');
     h.push('<div class="promises">');
     PROMISES.forEach(function (t) {
@@ -704,8 +724,16 @@ svg { display: block; }
       '<div class="chips">' + presetChips("chip-btn") + "</div></div>");
     h.push("</div>");
 
-    h.push('<div class="rail-phone"><div class="tilt">' + phone(LIBRARY["uc.digital-loyalty"].screen) + "</div>" +
-      '<p class="rail-caption">Every answer comes with the screens, not a report. This one belongs to a coffee roastery.</p></div>');
+    var t = TEASERS[S.teaser % TEASERS.length];
+    h.push('<div class="rail-phone"><div class="tilt">' + phone(LIBRARY[t.id].screen) + "</div>");
+    h.push('<div class="teaser-nav" role="group" aria-label="Example app">');
+    TEASERS.forEach(function (item, i) {
+      h.push('<button type="button" class="teaser-dot" data-act="teaser" data-v="' + i +
+        '" aria-pressed="' + (i === (S.teaser % TEASERS.length)) + '" aria-label="' +
+        esc(LIBRARY[item.id].shortName) + '"><span></span>' + esc(LIBRARY[item.id].shortName) + "</button>");
+    });
+    h.push("</div>");
+    h.push('<p class="rail-caption">' + esc(t.caption) + "</p></div>");
     h.push("</section></main>");
     return h.join("");
   }
@@ -786,6 +814,45 @@ svg { display: block; }
       h.push("</div>");
     }
     h.push("</section>");
+    return h.join("");
+  }
+
+
+  // Straight from the research table in Notion, not authored here. This is the
+  // section that proves the tool is citing real work.
+  function researchSection(p) {
+    var R = typeof researchFor === "function" ? researchFor(p.industry) : null;
+    if (!R || !R.rows.length) return "";
+    var h = ['<section class="sec" style="padding-top:44px">'];
+    h.push('<button type="button" class="disclosure-btn" data-act="research" aria-expanded="' + S.openResearch + '">' +
+      icon("chevron-right") + '<span style="font-size:15px;font-weight:600;color:var(--ink)">From the research table</span>' +
+      '<span style="font-size:13.5px;color:var(--ink-3)">' + R.rows.length + ' row' + (R.rows.length === 1 ? '' : 's') +
+      ' · ' + R.claims.length + ' findings · synced ' + esc(R.syncedAt) + '</span></button>');
+    if (S.openResearch) {
+      h.push('<div class="research rise-fast">');
+      R.rows.forEach(function (row) {
+        h.push('<div class="research-row">');
+        h.push('<div class="research-head"><span class="research-name">' + esc(row.industry) + '</span>' +
+          '<span class="research-roi">' + esc(row.roi) + '</span></div>');
+        h.push('<p class="research-why">' + esc(row.why) + '</p>');
+        h.push('<div class="research-cells">');
+        h.push('<div class="research-cell"><p class="label-xs">Vertical considerations</p><p>' + esc(row.considerations) + '</p></div>');
+        if (row.gap) h.push('<div class="research-cell gap"><p class="label-xs">Known gap in the research</p><p>' + esc(row.gap) + '</p></div>');
+        h.push('</div></div>');
+      });
+      h.push('<div class="receipts-grid">');
+      R.claims.slice(0, 8).forEach(function (c) {
+        h.push('<div class="receipt"><span class="receipt-stat">' + esc(c.stat) + '</span>' +
+          '<p class="receipt-claim">' + esc(c.claim) + '</p>' +
+          '<div class="receipt-meta"><span class="conf" data-l="' + c.confidence + '">' +
+          esc(CONF[c.confidence].label) + '</span><span class="receipt-src">' + esc(c.source) + '</span></div></div>');
+      });
+      h.push('</div>');
+      h.push('<p class="research-foot">' + esc(R.database) + ', snapshot of ' + esc(R.syncedAt) +
+        '. Findings are shown with the weight the table assigns them.</p>');
+      h.push('</div>');
+    }
+    h.push('</section>');
     return h.join("");
   }
 
@@ -981,7 +1048,7 @@ svg { display: block; }
       ? Math.min(S.openPhase === null ? 0 : S.openPhase, Math.max(phases.length - 1, 0))
       : Math.min(S.activeIdx, Math.max(phases.length - 1, 0));
     var body = S.dir === "a" ? doneA(p, tone, phases, idx) : doneB(p, tone, phases, idx);
-    var tail = antipatternSection(p) + receiptsSection(p);
+    var tail = antipatternSection(p) + receiptsSection(p) + researchSection(p);
     if (phases.length) tail += handoffSection(p);
     tail += captureSection(p);
     return "<main>" + body + tail + "</main>";
@@ -1058,6 +1125,7 @@ svg { display: block; }
     if (!t) return;
     var act = t.getAttribute("data-act"), v = t.getAttribute("data-v");
     if (act === "dir") set({ dir: v });
+    else if (act === "teaser") set({ teaser: Number(v) });
     else if (act === "industry") pickIndustry(v);
     else if (act === "preset") {
       var d = PERSONAS[v];
@@ -1068,6 +1136,7 @@ svg { display: block; }
     else if (act === "reset") { clearTimers(); set({ step: "intake", footNote: "Takes about fifteen seconds." }); }
     else if (act === "why") set({ openWhy: !S.openWhy });
     else if (act === "receipts") set({ openReceipts: !S.openReceipts });
+    else if (act === "research") set({ openResearch: !S.openResearch });
     else if (act === "phase") set({ openPhase: S.openPhase === Number(v) ? null : Number(v) });
     else if (act === "active") set({ activeIdx: Number(v) });
     else if (act === "copy") doCopy();
