@@ -38,7 +38,22 @@ const RESET = `
   }
 `;
 
-const src = await readFile(SRC, "utf8");
+// The design specifies Inter and JetBrains Mono. Loading them is safe on the
+// deployed site; if the request is blocked the token stacks fall back to
+// -apple-system / ui-monospace, which is what expo.dev itself falls back to.
+const FONTS = `
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />`;
+
+let src = await readFile(SRC, "utf8");
+
+// Inline src/icons.js in place of its <script src>, so dist is one file with
+// no second request and no broken relative path.
+const iconsTag = /<script src="icons\.js"><\/script>/;
+if (!iconsTag.test(src)) throw new Error('src/page.html no longer references icons.js');
+const iconsJs = await readFile(new URL("./src/icons.js", import.meta.url), "utf8");
+src = src.replace(iconsTag, `<script>\n${iconsJs}</script>`);
 
 const titleMatch = src.match(/<title>([\s\S]*?)<\/title>/i);
 if (!titleMatch) throw new Error("src/page.html is missing a <title> element");
@@ -47,10 +62,11 @@ const title = titleMatch[1].trim();
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/gi)].map((m) => m[1]);
 if (styles.length === 0) throw new Error("src/page.html is missing a <style> block");
 
-// Everything after the last </style> is page content (header / main / script).
+// Everything after the last </style> is page content (mount point + script).
 const lastStyleEnd = src.toLowerCase().lastIndexOf("</style>") + "</style>".length;
 const body = src.slice(lastStyleEnd).trim();
-if (!body.includes("<main")) throw new Error("Could not find page body after the last <style> block");
+if (!body.includes('id="app"')) throw new Error('Could not find the #app mount point after the last <style> block');
+if (!/<script>[\s\S]*<\/script>/.test(body)) throw new Error("Page body is missing its script");
 
 const doc = `<!doctype html>
 <html lang="en">
@@ -59,8 +75,8 @@ const doc = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${title}</title>
 <meta name="description" content="${DESCRIPTION}" />
-<meta name="color-scheme" content="light dark" />
 <link rel="icon" href="${FAVICON}" />
+${FONTS}
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="${title}" />
