@@ -386,170 +386,17 @@ svg { display: block; }
 <div id="app"></div>
 
 <script src="icons.js"></script>
+<script src="library.js"></script>
+<script src="matcher.js"></script>
 <script>
 (function () {
   "use strict";
 
   /* ============================================================
-     Library, evidence, anti patterns and personas, taken verbatim
-     from Redesign.dc.html. Each use case now carries a `screen`,
-     which is what the phone mock renders.
+     LIBRARY, EVIDENCE, ANTIPATTERNS, PERSONAS, INDUSTRIES and
+     SERVICE_NOTES come from library.js; assess() from matcher.js.
+     Both are inlined ahead of this script at build time.
      ============================================================ */
-
-  var LIBRARY = {
-    "uc.digital-loyalty": {
-      name: "Digital loyalty that replaces the punch card", shortName: "Loyalty",
-      oneLiner: "Regulars earn and redeem in the app instead of carrying a card they lose. You finally learn who your best customers actually are.",
-      whatYouBuild: ["Sign in with a phone number or Apple and Google", "A stamp balance screen that is the app's home", "A scannable member code for the counter", "Reward unlock and redemption", "One push notification: you are one visit from a reward"],
-      apps: [{ name: "Starbucks Rewards", note: "Stars per visit wired straight into order ahead." }, { name: "Sephora Beauty Insider", note: "Tiered points with real perks, not just discounts." }],
-      effort: "About a week",
-      effortNote: "The app is a weekend. Deciding the earn and burn economics so rewards do not eat your margin is the real work.",
-      evidence: ["ev.loyalty.sephora-share", "ev.qsr.starbucks-float"],
-      services: ["EAS Build", "Push credentials", "EAS Hosting", "EAS Update"],
-      screen: { app: "Rose City", nav: "Rewards", hero: { label: "Your card", value: "8 of 10", sub: "Two more visits and the next bag is on us" }, dots: { on: 8, total: 10 }, rowsTitle: "Recent", rows: [{ title: "Oat flat white", meta: "Today · +1" }, { title: "Ethiopia Guji 340g", meta: "Sat · +1" }, { title: "Reward redeemed", meta: "12 Jun · −10", tone: "good" }], cta: "Show my member code", tabs: ["Card", "Order", "Beans", "Me"], tab: 0 }
-    },
-    "uc.order-ahead": {
-      name: "Order ahead and pay before arriving", shortName: "Order ahead",
-      oneLiner: "Customers build their usual order, pay in the app, and skip the queue. You keep the margin instead of handing it to an aggregator.",
-      whatYouBuild: ["Menu with modifiers and a saved usual order", "Cart and stored card checkout", "Pickup time picker that respects kitchen capacity", "Order status screen and a ready for pickup push", "Staff side order queue on the web"],
-      apps: [{ name: "Domino's", note: "Saved orders and one tap reorder with live tracking." }, { name: "Taco Bell", note: "Deep customisation is the reason to open the app over a kiosk." }],
-      effort: "A few weeks",
-      effortNote: "Payments and menu modifiers are where the time goes. Start with a fixed menu and no modifiers.",
-      evidence: ["ev.qsr.mobile-share", "ev.qsr.owned-app-preference"],
-      services: ["EAS Build", "EAS Hosting", "EAS Update", "EAS Submit"],
-      caveat: "Do not launch ordering without loyalty attached. Ordering alone gives people no reason to pick your app over DoorDash.",
-      screen: { app: "Rose City", nav: "Order ahead", hero: { label: "Your usual", value: "$6.40", sub: "Ready at 8:15 · Mississippi Ave" }, rowsTitle: "In your order", rows: [{ title: "Oat flat white", meta: "Large · extra hot" }, { title: "Almond croissant", meta: "1" }, { title: "Pickup 8:15", meta: "3 ahead of you", tone: "info" }], cta: "Pay $6.40 and reorder", tabs: ["Card", "Order", "Beans", "Me"], tab: 1 }
-    },
-    "uc.subscription-manage": {
-      name: "Self serve subscription management", shortName: "Subscriptions",
-      oneLiner: "Subscribers pause, skip, change grind, and update their card without emailing you. Churn drops because cancelling stops being the easiest option.",
-      whatYouBuild: ["Next shipment screen with skip and pause", "Plan and frequency editing", "Card update flow", "Delivery notifications"],
-      apps: [{ name: "Blue Apron", note: "Skip a week is one tap, so people skip instead of cancelling." }],
-      effort: "About a week",
-      effortNote: "Mostly a thin client over the billing provider you already use.",
-      evidence: ["ev.loyalty.prime-renewal"],
-      services: ["EAS Build", "EAS Hosting", "EAS Update"],
-      screen: { app: "Rose City", nav: "Your beans", hero: { label: "Next shipment", value: "Tue 14", sub: "Ethiopia Guji · 340g · filter grind" }, rowsTitle: "Plan", rows: [{ title: "Every 2 weeks", meta: "Change" }, { title: "Card ending 4412", meta: "Update" }, { title: "Skip next delivery", meta: "One tap", tone: "warn" }], cta: "Skip this week", tabs: ["Card", "Order", "Beans", "Me"], tab: 2 }
-    },
-    "uc.offline-field-capture": {
-      name: "Job capture that works with no signal", shortName: "Offline job capture",
-      oneLiner: "Your crew records the job, photos, parts, and a signature on site, in a basement or on a roof, and it syncs when they get bars back.",
-      whatYouBuild: ["Today's assigned jobs, cached on the device", "Job form that writes to local storage first", "Photo capture attached to the job record", "Customer signature and a PDF receipt", "A sync queue with visible pending state"],
-      apps: [{ name: "ServiceTitan Mobile", note: "The in field invoice is the feature that pays for the app." }, { name: "John Deere Operations Center", note: "Treats no connectivity as the default, not the exception." }],
-      effort: "A few weeks",
-      effortNote: "Offline sync is genuinely the hard part. Scope version one to a single form and one direction of sync.",
-      evidence: ["ev.field.productivity-share", "ev.field.cost-reduction"],
-      services: ["EAS Build", "EAS Hosting", "EAS Update", "EAS Workflows"],
-      caveat: "If you already pay for a field service platform, the honest answer is to turn on their mobile app first.",
-      screen: { app: "Field Ops", nav: "Today", hero: { label: "Tuesday", value: "4 jobs", sub: "2 waiting to sync · working offline" }, rowsTitle: "Assigned to you", rows: [{ title: "14 Alder St · no heat", meta: "09:00 · done", tone: "good" }, { title: "22 Prescott · install", meta: "11:30 · pending sync", tone: "warn" }, { title: "Fremont Lofts · service", meta: "14:00" }], cta: "Start next job", tabs: ["Today", "Jobs", "Parts", "Me"], tab: 0, offline: true }
-    },
-    "uc.quote-to-invoice": {
-      name: "Quote and invoice from the driveway", shortName: "Invoice on site",
-      oneLiner: "Price the job, get it approved, and take payment before leaving the site. Cash arrives days earlier and nothing gets written up from memory.",
-      whatYouBuild: ["Line item builder with saved common jobs", "Customer approval and signature on the device", "Card or tap to pay collection", "Emailed receipt and an accounting handoff"],
-      apps: [{ name: "Jobber", note: "Quote, approve, and collect in one visit rather than three touches." }],
-      effort: "A few weeks",
-      effortNote: "Payment provider onboarding takes longer than the screens do. Start that paperwork first.",
-      evidence: ["ev.field.cost-reduction"],
-      services: ["EAS Build", "EAS Hosting", "EAS Update"],
-      screen: { app: "Field Ops", nav: "22 Prescott", hero: { label: "Job total", value: "$1,240", sub: "Approved on site by M. Reyes" }, rowsTitle: "Line items", rows: [{ title: "Condenser fan motor", meta: "$410" }, { title: "Labour · 3.5 hrs", meta: "$630" }, { title: "Refrigerant top up", meta: "$200" }], cta: "Take payment · tap to pay", tabs: ["Today", "Jobs", "Parts", "Me"], tab: 1 }
-    }
-  };
-
-  var EVIDENCE = {
-    "ev.qsr.starbucks-float": { stat: "$1.77B", claim: "Sat in unused pre loaded Starbucks app balances in 2024, across 30 million mobile users.", source: "Company filings", confidence: "strong" },
-    "ev.qsr.mobile-share": { stat: "60%", claim: "Of digital restaurant orders are placed on mobile.", source: "NPD Group", confidence: "strong" },
-    "ev.qsr.owned-app-preference": { stat: "70%", claim: "Of consumers say they would rather order in a restaurant's own app than a third party.", source: "Industry survey", confidence: "directional" },
-    "ev.loyalty.sephora-share": { stat: "80%", claim: "Of Sephora's North America sales come through Beauty Insider, at 40 to 46 million members.", source: "Company statements", confidence: "strong" },
-    "ev.loyalty.prime-renewal": { stat: "93%", claim: "Of Amazon Prime members renew after year one, and they spend about twice as much as non members.", source: "Analyst estimates", confidence: "directional" },
-    "ev.field.productivity-share": { stat: "75%", claim: "Of field service companies using mobile tools report higher staff productivity.", source: "Vendor aggregation", confidence: "vendor" },
-    "ev.field.cost-reduction": { stat: "20%", claim: "Operational cost reduction is achievable with mobile field service management.", source: "Aberdeen Group", confidence: "directional" }
-  };
-
-  var ANTIPATTERNS = {
-    "ap.one-time-transaction": {
-      name: "A relationship that ends after one transaction",
-      body: "Every credible mobile business case rests on the same person coming back. When someone books you once and has no reason to return within a year, an app has nowhere to accrue value. There is no loyalty balance to build, no saved preference worth storing, and nothing worth a push notification.",
-      better: "Put the effort into a fast mobile first booking and gallery experience on the web, plus email follow up. If you want an icon on the home screen, a progressive web app gets you that without app store review.",
-      revisit: "You add mini sessions on a subscription, a print membership, or a referral programme. Anything that gives the same client a reason to open it a second time."
-    },
-    "ap.seasonal-only": {
-      name: "Demand that only exists a few weeks a year",
-      body: "Wedding work concentrates into a short season, and the client relationship is intense for a few months and then over. An installed app has to survive the ten quiet months, and it will be deleted long before the next booking.",
-      better: "A shared gallery link and a scheduled email sequence carry the same information without asking anyone to install anything.",
-      revisit: "You move into a category with year round repeat demand, such as family or newborn sessions on a recurring plan."
-    }
-  };
-
-  var PERSONAS = {
-    roastery: {
-      label: "Coffee roastery", industry: "qsr", website: "https://rosecityroasters.example",
-      description: "I run a small coffee roastery and cafe in Portland. We have a lot of regulars, and most of them order the same drink every morning. We are on DoorDash but the fees are brutal. We also sell beans by subscription to about 400 people.",
-      siteRead: true,
-      understanding: { restated: "A neighbourhood coffee roastery and café with a daily regular base, an unprofitable third party delivery channel, and a 400 person bean subscription running alongside it.", facets: [["Return cadence", "Daily"], ["Revenue", "Transactional and subscription"], ["Serves", "Repeat customers"], ["Input", "Clear"]] },
-      verdict: { position: 5, tone: "good", short: "Three use cases fit. One pays for the build on its own.", lead: "The same person comes back every day. That is the whole case, and most businesses do not have it.", headline: "Yes. Three use cases fit, and one of them pays for the build on its own.", reasoning: "You have the thing that makes a mobile app work and that most businesses do not have, which is the same person returning daily. That turns loyalty from a gimmick into a habit loop, and it gives you a route off DoorDash without losing the customers you acquired there." },
-      recs: [
-        { id: "uc.digital-loyalty", rank: 1, fit: "core", signals: ["we have regulars", "customers order the same thing every time"], why: "Your regulars already behave like members, you just have no way to recognise them. Loyalty is also the lever that moves a DoorDash customer onto your own channel, because the reward only exists in your app." },
-        { id: "uc.order-ahead", rank: 2, fit: "core", signals: ["DoorDash fees are brutal", "people queue at the counter"], why: "The morning rush is where you lose both throughput and margin. Order ahead turns your counter into pickup only at peak, and every order that moves off the aggregator keeps its full margin." },
-        { id: "uc.subscription-manage", rank: 3, fit: "strong", signals: ["we sell beans by subscription"], why: "400 subscribers is enough that support email is already a cost. Letting people skip a week instead of emailing you to cancel is usually the cheapest churn reduction available." }
-      ],
-      appName: "Rose City Roasters",
-      concept: "A loyalty app your regulars actually open."
-    },
-    hvac: {
-      label: "HVAC contractor", industry: "trades", website: "https://example-hvac.example",
-      description: "We are an HVAC company with 6 technicians doing installs and service calls around the metro. The techs still use paper job sheets and there is no signal in half the basements they work in. Everything gets typed up again back at the office and invoices go out days later.",
-      siteRead: false,
-      understanding: { restated: "A six technician HVAC install and service business, running paper job sheets in the field, re entering everything at the office, and invoicing several days after the work is done.", facets: [["Return cadence", "Daily"], ["Revenue", "Transactional and service"], ["Serves", "Field workers"], ["Input", "Clear"]] },
-      verdict: { position: 4, tone: "good", short: "The case here is cost, not customer acquisition.", lead: "Six technicians doing double entry is a daily cost you can measure, and every invoice sitting in a van is working capital.", headline: "Yes, and the case here is cost, not customer acquisition.", reasoning: "Your app has an internal user, not a consumer one. Six technicians doing double entry is a measurable daily cost, and the days between finishing a job and sending the invoice is working capital sitting in a van. Both of those are what a mobile app is genuinely good at removing." },
-      recs: [
-        { id: "uc.offline-field-capture", rank: 1, fit: "core", signals: ["our techs still use paper", "no signal in basements", "double entry back at the office"], why: "This is the whole job. Your constraint is connectivity, which is exactly what rules out a web based form and makes a real app the right tool rather than a nice to have." },
-        { id: "uc.quote-to-invoice", rank: 2, fit: "strong", signals: ["invoices go out days later"], why: "Once the job record already exists on the device, invoicing from the driveway is a small addition with a direct cash flow effect. Build it second, on top of the capture work." }
-      ],
-      appName: "Field Ops",
-      concept: "A job app for your crew that works with no signal."
-    },
-    photographer: {
-      label: "Wedding photographer", industry: "creator", website: "",
-      description: "I am a wedding photographer working on my own. I shoot around 20 weddings a year, mostly between May and September. Couples find me through Instagram and referrals, I shoot their wedding, deliver a gallery, and that is usually the end of it.",
-      siteRead: false,
-      understanding: { restated: "A solo wedding photographer shooting roughly 20 events a year, concentrated in a five month season, with a client relationship that completes at gallery delivery.", facets: [["Return cadence", "Once"], ["Revenue", "Project fees"], ["Serves", "One time clients"], ["Input", "Clear"]] },
-      verdict: { position: 1, tone: "critical", short: "An app would cost you real money and give your clients nothing they need.", lead: "A mobile app earns its keep when the same person opens it repeatedly. Your clients hire you once, in a season, and are done.", headline: "Not right now. An app would cost you real money and give your clients nothing they need.", reasoning: "This is not a judgement about your business, it is a judgement about the shape of the relationship. A mobile app earns its keep when the same person opens it repeatedly. Your clients hire you once, in a season, and are done. Two things in the library rule this out, and both would have to change first." },
-      antipatterns: ["ap.one-time-transaction", "ap.seasonal-only"],
-      recs: [], appName: "",
-      concept: "A mobile gallery link and an email sequence. No install.",
-      deadScreen: { app: "Your app", nav: "Nothing to open", hero: { label: "Last opened", value: "Never", sub: "The gallery link did the job without an install" }, rowsTitle: "What it would hold", rows: [{ title: "One gallery, delivered once", meta: "email", tone: "dead" }, { title: "No balance to build", meta: "—", tone: "dead" }, { title: "Ten quiet months a year", meta: "—", tone: "dead" }], cta: "Use a shared gallery link instead", tabs: ["Home", "Gallery", "Me"], tab: 0, dead: true }
-    }
-  };
-
-  var SERVICE_NOTES = {
-    "EAS Build": "Required. Push and payments use native code, so create a development build early.",
-    "Push credentials": "Run eas credentials and let EAS manage APNs and FCM.",
-    "EAS Hosting": "Host the server side as Expo Router API routes and deploy with eas deploy.",
-    "EAS Update": "Ship JavaScript fixes without an app store review.",
-    "EAS Submit": "For App Store and Play Store submission when phase one is ready.",
-    "EAS Workflows": "Add continuous integration under .eas/workflows for a multi phase build."
-  };
-
-  var INDUSTRIES = [
-    { key: "qsr", label: "Food, drink, cafés", short: "Food", persona: "roastery", icon: "coffee" },
-    { key: "retail", label: "Retail and grocery", short: "Retail", persona: "roastery", icon: "shopping-bag" },
-    { key: "trades", label: "Trades and home services", short: "Trades", persona: "hvac", icon: "wrench" },
-    { key: "fitness", label: "Fitness and studios", short: "Fitness", persona: "roastery", icon: "dumbbell" },
-    { key: "nonprofit", label: "Nonprofit", short: "Nonprofit", persona: "roastery", icon: "heart-handshake" },
-    { key: "faith", label: "Faith community", short: "Faith", persona: "roastery", icon: "church" },
-    { key: "b2b", label: "B2B and field service", short: "B2B", persona: "hvac", icon: "hard-hat" },
-    { key: "health", label: "Healthcare and clinics", short: "Health", persona: "hvac", icon: "stethoscope" },
-    { key: "creator", label: "Solo creator or coach", short: "Creator", persona: "photographer", icon: "mic" },
-    { key: "events", label: "Events and ticketing", short: "Events", persona: "roastery", icon: "ticket" },
-    { key: "other", label: "Something else", short: "Other", persona: "roastery", icon: "shapes" }
-  ];
-
-  var PROMISES = [
-    "A straight yes or no, with the reasoning",
-    "The two or three things your app should actually do",
-    "A prompt that builds the first one tonight"
-  ];
 
   var SCALE = ["Probably not", "Not yet", "Start small", "Yes", "Strong yes"];
   var BIGWORD = ["No", "Not yet", "Maybe", "Yes", "Yes"];
@@ -742,6 +589,17 @@ svg { display: block; }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
   function set(patch) { Object.assign(S, patch); render(); }
 
+  // A live assessment relabels the phone screens so they belong to the
+  // visitor's world rather than the coffee roastery they were written for.
+  function screenFor(p, id) {
+    var sc = LIBRARY[id].screen;
+    if (!p || !p.screenApp) return sc;
+    var copy = {};
+    for (var k in sc) if (Object.prototype.hasOwnProperty.call(sc, k)) copy[k] = sc[k];
+    copy.app = p.screenApp;
+    return copy;
+  }
+
   function mkPhase(r, i) {
     var u = LIBRARY[r.id];
     return {
@@ -756,7 +614,7 @@ svg { display: block; }
     var speed = S.revealMs;
     var host = (site || "").trim().replace(/^https?:\/\//i, "").replace(/\/.*$/, "");
     var steps = [["read", "Read your description"]];
-    if (host) steps.push(["site", "Fetched " + host]);
+    if (host) steps.push(["site", (p && p.live ? "Noted " : "Fetched ") + host]);
     steps.push(["match", "Matched 24 use cases, 8 anti patterns"], ["rank", "Ranked and drew the screens"]);
     set({
       step: "thinking", result: p, steps: steps, siteHost: host, ticks: {}, stamps: {},
@@ -805,7 +663,6 @@ svg { display: block; }
   function intakeA() {
     var filled = S.website.trim() ? " filled" : "";
     var h = ['<main class="shell"><section class="intake-a"><div>'];
-    h.push('<span class="eyebrow eyebrow-accent">No account needed</span>');
     h.push('<h1 class="hero-h1">Should your business have an app?</h1>');
     h.push('<p class="hero-lede">Tell us what you do. Fifteen seconds later you get:</p>');
     h.push('<div class="promises">');
@@ -1027,9 +884,13 @@ svg { display: block; }
         h.push('<span class="seg-name' + (hit ? " hit" : "") + '">' + esc(name) + "</span>");
       });
       h.push("</div></div>");
+      // Be straight about it: a static page cannot fetch a third party site,
+      // so on a live assessment the URL is noted but never read.
+      var readSource = !S.siteHost ? "Description only"
+        : p.live ? esc(S.siteHost) + " noted, not fetched in this demo"
+        : "Description and " + esc(S.siteHost);
       h.push('<div class="read-block"><div class="read-head"><p class="label-xs">What we read</p>' +
-        '<span class="read-source">' +
-        (S.siteHost ? "Description and " + esc(S.siteHost) : "Description only") + "</span></div>");
+        '<span class="read-source">' + readSource + "</span></div>");
       h.push('<p class="restated">' + esc(p.understanding.restated) + "</p>");
       h.push('<div class="facets">');
       p.understanding.facets.forEach(function (f) {
@@ -1039,7 +900,7 @@ svg { display: block; }
     }
     h.push("</div></div>");
 
-    var screen = phases.length ? LIBRARY[phases[idx].id].screen : p.deadScreen;
+    var screen = phases.length ? screenFor(p, phases[idx].id) : p.deadScreen;
     var caption = phases.length
       ? "Phase " + (idx + 1) + " · " + LIBRARY[phases[idx].id].name.toLowerCase() + ". " +
         LIBRARY[phases[idx].id].effort + " of work."
@@ -1102,7 +963,7 @@ svg { display: block; }
           '" aria-pressed="' + (i === idx) + '">');
         h.push('<div class="phone-card-kicker"><span class="d"></span>PHASE ' + (i + 1) +
           " · " + esc(LIBRARY[r.id].effort) + "</div>");
-        h.push('<div class="phone-card-scale">' + phone(LIBRARY[r.id].screen) + "</div>");
+        h.push('<div class="phone-card-scale">' + phone(screenFor(p, r.id)) + "</div>");
         h.push('<p class="phone-card-name">' + esc(LIBRARY[r.id].name) + "</p></div>");
       });
       h.push("</div>");
@@ -1153,9 +1014,30 @@ svg { display: block; }
     }
   }
 
+  // Picking an industry no longer loads a persona — it is just an input to
+  // the matcher, so the answer comes from what the visitor actually wrote.
   function pickIndustry(key) {
     var ind = INDUSTRIES.filter(function (i) { return i.key === key; })[0];
-    if (ind) set({ industry: ind.key, persona: ind.persona });
+    if (ind) set({ industry: ind.key, persona: null });
+  }
+
+  // A worked example runs its hand written verdict, but only while it is
+  // untouched. Edit the description and it becomes your own input.
+  function submit() {
+    var desc = S.description.trim();
+    if (desc.length < 20) {
+      set({ footNote: "Tell us a bit more first, at least a sentence or two." });
+      return;
+    }
+    if (S.persona && desc === PERSONAS[S.persona].description.trim()) {
+      run(PERSONAS[S.persona], S.website);
+      return;
+    }
+    if (!S.industry) {
+      set({ footNote: "Pick an industry too, so we know which use cases to weigh." });
+      return;
+    }
+    run(assess({ industry: S.industry, description: S.description, website: S.website }), S.website);
   }
 
   function doCopy() {
@@ -1182,13 +1064,7 @@ svg { display: block; }
       set({ persona: v, industry: d.industry, description: d.description, website: d.website,
         footNote: "Loaded. Hit get my answer." });
     }
-    else if (act === "submit") {
-      if (!S.persona && S.description.trim().length < 20) {
-        set({ footNote: "Tell us a bit more first, at least a sentence or two." });
-        return;
-      }
-      run(S.persona ? PERSONAS[S.persona] : PERSONAS.roastery, S.website);
-    }
+    else if (act === "submit") submit();
     else if (act === "reset") { clearTimers(); set({ step: "intake", footNote: "Takes about fifteen seconds." }); }
     else if (act === "why") set({ openWhy: !S.openWhy });
     else if (act === "receipts") set({ openReceipts: !S.openReceipts });

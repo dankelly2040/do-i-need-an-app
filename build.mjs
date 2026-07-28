@@ -48,12 +48,14 @@ const FONTS = `
 
 let src = await readFile(SRC, "utf8");
 
-// Inline src/icons.js in place of its <script src>, so dist is one file with
-// no second request and no broken relative path.
-const iconsTag = /<script src="icons\.js"><\/script>/;
-if (!iconsTag.test(src)) throw new Error('src/page.html no longer references icons.js');
-const iconsJs = await readFile(new URL("./src/icons.js", import.meta.url), "utf8");
-src = src.replace(iconsTag, `<script>\n${iconsJs}</script>`);
+// Inline each module in place of its <script src>, so dist is one file with
+// no extra requests and no broken relative paths.
+for (const name of ["icons.js", "library.js", "matcher.js"]) {
+  const tag = new RegExp(`<script src="${name.replace(".", "\\.")}"></script>`);
+  if (!tag.test(src)) throw new Error(`src/page.html no longer references ${name}`);
+  const js = await readFile(new URL(`./src/${name}`, import.meta.url), "utf8");
+  src = src.replace(tag, `<script>\n${js}</script>`);
+}
 
 const titleMatch = src.match(/<title>([\s\S]*?)<\/title>/i);
 if (!titleMatch) throw new Error("src/page.html is missing a <title> element");
@@ -96,6 +98,45 @@ ${body}
 </body>
 </html>
 `;
+
+// Smoke test: run every inline script in sequence against a DOM stub. This
+// exists because splitting the data into modules once dropped a constant and
+// the page shipped rendering nothing, with no console error to find.
+{
+  const scripts = [...doc.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  if (scripts.length < 4) throw new Error(`expected 4 inline scripts, found ${scripts.length}`);
+
+  const noop = () => {};
+  const stubEl = {
+    innerHTML: "", value: "", textContent: "", classList: { toggle: noop, contains: () => false },
+    children: [], style: {},
+    addEventListener: noop, appendChild: noop, removeChild: noop, focus: noop,
+    setAttribute: noop, getAttribute: () => null, setSelectionRange: noop,
+    querySelector: () => null, querySelectorAll: () => [], closest: () => null, select: noop,
+  };
+  const documentStub = {
+    documentElement: { setAttribute: noop },
+    body: { appendChild: noop, removeChild: noop },
+    getElementById: () => stubEl,
+    querySelector: () => null,
+    querySelectorAll: () => [],
+    createElement: () => stubEl,
+    activeElement: null,
+    execCommand: noop,
+  };
+
+  try {
+    new Function("window", "document", "navigator", "setTimeout", "clearTimeout", scripts.join("\n;\n"))(
+      { addEventListener: noop, matchMedia: () => ({ matches: false }), setTimeout: noop },
+      documentStub,
+      {},
+      noop,
+      noop
+    );
+  } catch (err) {
+    throw new Error(`inline scripts threw on first render: ${err.message}`);
+  }
+}
 
 await mkdir(OUT_DIR, { recursive: true });
 await writeFile(OUT, doc, "utf8");
