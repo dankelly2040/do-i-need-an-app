@@ -1,0 +1,1273 @@
+<title>Do I need a mobile app?</title>
+
+<style>
+  /* ============================================================
+     Tokens mirrored from expo.dev: Radix slate neutrals, Radix
+     semantic scales, and the --expo-color-app-* spectrum.
+     ============================================================ */
+
+  :root {
+    /* neutrals (radix slate, light) */
+    --slate-1: #fcfcfd; --slate-2: #f9f9fb; --slate-3: #f0f0f3;
+    --slate-4: #e8e8ec; --slate-5: #e0e1e6; --slate-6: #d9d9e0;
+    --slate-7: #cdced6; --slate-8: #b9bbc6; --slate-9: #8b8d98;
+    --slate-10: #80838d; --slate-11: #60646c; --slate-12: #1c2024;
+
+    --bg-screen: var(--slate-1);
+    --bg-default: #ffffff;
+    --bg-subtle: var(--slate-2);
+    --bg-element: var(--slate-3);
+    --bg-hover: var(--slate-4);
+    --border: var(--slate-6);
+    --border-soft: var(--slate-5);
+    --text: var(--slate-12);
+    --text-2: var(--slate-11);
+    --text-3: var(--slate-10);
+    --text-4: var(--slate-9);
+
+    --link: #0d74ce;
+    --info-bg: #e6f4fe; --info-border: #8ec8f6; --info-text: #0d74ce;
+    --success-bg: #e6f6eb; --success-border: #8eceaa; --success-text: #218358; --success-solid: #30a46c;
+    --warning-bg: #fff7c2; --warning-border: #e9c162; --warning-text: #ab6400; --warning-solid: #ffc53d;
+    --danger-bg: #feebec; --danger-border: #f4a9aa; --danger-text: #ce2c31; --danger-solid: #e5484d;
+
+    --btn-bg: #000000; --btn-text: #ffffff; --btn-hover: var(--slate-11);
+
+    /* expo app spectrum, used once, on the rail */
+    --app-cyan: #07c0cb; --app-indigo: #4b50b2; --app-purple: #8945a3;
+    --app-orange: #e96d3c; --app-gold: #f38f2f;
+
+    --shadow-xs: 0 1px 3px #00000006, 0 1px 2px #0000000d;
+    --shadow-sm: 0 3px 6px #00000014, 0 2px 4px #00000012;
+    --shadow-md: 0 10px 20px #0000001a, 0 3px 6px #0000000d;
+
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    --r-card: 24px;
+    --r-panel: 16px;
+    --r-pill: 999px;
+
+    --shell: 1120px;
+    --read: 68ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --slate-1: #111113; --slate-2: #18191b; --slate-3: #212225;
+      --slate-4: #272a2d; --slate-5: #2e3135; --slate-6: #363a3f;
+      --slate-7: #43484e; --slate-8: #5a6169; --slate-9: #696e77;
+      --slate-10: #777b84; --slate-11: #b0b4ba; --slate-12: #edeef0;
+
+      --bg-screen: #0c0d0e;
+      --bg-default: var(--slate-1);
+      --bg-subtle: var(--slate-2);
+      --bg-element: var(--slate-3);
+      --bg-hover: var(--slate-4);
+
+      --link: #70b8ff;
+      --info-bg: #0d2847; --info-border: #205d9e; --info-text: #70b8ff;
+      --success-bg: #132d21; --success-border: #28684a; --success-text: #3dd68c; --success-solid: #30a46c;
+      --warning-bg: #302008; --warning-border: #614a19; --warning-text: #ffca16; --warning-solid: #ffc53d;
+      --danger-bg: #3b1219; --danger-border: #7e2a33; --danger-text: #ff9592; --danger-solid: #e5484d;
+
+      --btn-bg: #ffffff; --btn-text: var(--slate-1); --btn-hover: var(--slate-11);
+
+      --shadow-xs: 0 1px 3px #0000004d, 0 1px 2px #0000004d;
+      --shadow-sm: 0 3px 6px #0006, 0 2px 4px #00000040;
+      --shadow-md: 0 10px 20px #00000040, 0 3px 6px #00000040;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --slate-1: #111113; --slate-2: #18191b; --slate-3: #212225;
+    --slate-4: #272a2d; --slate-5: #2e3135; --slate-6: #363a3f;
+    --slate-7: #43484e; --slate-8: #5a6169; --slate-9: #696e77;
+    --slate-10: #777b84; --slate-11: #b0b4ba; --slate-12: #edeef0;
+    --bg-screen: #0c0d0e;
+    --bg-default: var(--slate-1);
+    --bg-subtle: var(--slate-2);
+    --bg-element: var(--slate-3);
+    --bg-hover: var(--slate-4);
+    --link: #70b8ff;
+    --info-bg: #0d2847; --info-border: #205d9e; --info-text: #70b8ff;
+    --success-bg: #132d21; --success-border: #28684a; --success-text: #3dd68c; --success-solid: #30a46c;
+    --warning-bg: #302008; --warning-border: #614a19; --warning-text: #ffca16; --warning-solid: #ffc53d;
+    --danger-bg: #3b1219; --danger-border: #7e2a33; --danger-text: #ff9592; --danger-solid: #e5484d;
+    --btn-bg: #ffffff; --btn-text: var(--slate-1); --btn-hover: var(--slate-11);
+    --shadow-xs: 0 1px 3px #0000004d, 0 1px 2px #0000004d;
+    --shadow-sm: 0 3px 6px #0006, 0 2px 4px #00000040;
+    --shadow-md: 0 10px 20px #00000040, 0 3px 6px #00000040;
+  }
+
+  :root[data-theme="light"] {
+    --slate-1: #fcfcfd; --slate-2: #f9f9fb; --slate-3: #f0f0f3;
+    --slate-4: #e8e8ec; --slate-5: #e0e1e6; --slate-6: #d9d9e0;
+    --slate-7: #cdced6; --slate-8: #b9bbc6; --slate-9: #8b8d98;
+    --slate-10: #80838d; --slate-11: #60646c; --slate-12: #1c2024;
+    --bg-screen: var(--slate-1);
+    --bg-default: #ffffff;
+    --bg-subtle: var(--slate-2);
+    --bg-element: var(--slate-3);
+    --bg-hover: var(--slate-4);
+    --link: #0d74ce;
+    --info-bg: #e6f4fe; --info-border: #8ec8f6; --info-text: #0d74ce;
+    --success-bg: #e6f6eb; --success-border: #8eceaa; --success-text: #218358; --success-solid: #30a46c;
+    --warning-bg: #fff7c2; --warning-border: #e9c162; --warning-text: #ab6400; --warning-solid: #ffc53d;
+    --danger-bg: #feebec; --danger-border: #f4a9aa; --danger-text: #ce2c31; --danger-solid: #e5484d;
+    --btn-bg: #000000; --btn-text: #ffffff; --btn-hover: var(--slate-11);
+    --shadow-xs: 0 1px 3px #00000006, 0 1px 2px #0000000d;
+    --shadow-sm: 0 3px 6px #00000014, 0 2px 4px #00000012;
+    --shadow-md: 0 10px 20px #0000001a, 0 3px 6px #0000000d;
+  }
+
+  /* ============================================================
+     base
+     ============================================================ */
+
+  body {
+    margin: 0;
+    background: var(--bg-screen);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv05" 1, "ss03" 1;
+  }
+
+  .shell { max-width: var(--shell); margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3, h4 { font-weight: 600; margin: 0; }
+  h1 { font-size: clamp(38px, 5.4vw, 56px); letter-spacing: -1.4px; line-height: 1.06; text-wrap: balance; }
+  h2 { font-size: 32px; letter-spacing: -1px; line-height: 1.1; }
+  h3 { font-size: 24px; letter-spacing: -0.5px; line-height: 1.2; }
+  p { margin: 0; }
+
+  .eyebrow { font-size: 13px; font-weight: 500; color: var(--text-3); }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  a { color: var(--link); }
+  :focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 6px; }
+
+  /* ============================================================
+     masthead
+     ============================================================ */
+
+  .masthead { border-bottom: 1px solid var(--border-soft); background: var(--bg-default); }
+  .masthead-inner {
+    max-width: var(--shell); margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wordmark { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 19px; letter-spacing: -0.5px; }
+  .wordmark svg { width: 22px; height: 17px; display: block; }
+  .masthead-tool { font-size: 15px; color: var(--text-2); padding-left: 12px; border-left: 1px solid var(--border); }
+  .masthead-spacer { flex: 1; }
+  .ghost-btn {
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    background: transparent; border: 1px solid var(--slate-7); color: var(--text);
+    padding: 7px 16px; border-radius: var(--r-pill); cursor: pointer;
+  }
+  .ghost-btn:hover { background: var(--bg-element); }
+
+  /* ============================================================
+     hero
+     ============================================================ */
+
+  .hero { padding: 76px 0 8px; }
+  .hero h1 { max-width: 20ch; margin-bottom: 24px; }
+  .hero-sub { max-width: var(--read); font-size: 19px; line-height: 1.6; color: var(--text-2); }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  /* ============================================================
+     intake
+     ============================================================ */
+
+  .intake {
+    margin: 44px 0 0;
+    background: var(--bg-default);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-xs);
+    overflow: hidden;
+  }
+  .intake-head {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+    padding: 18px 32px; background: var(--bg-subtle); border-bottom: 1px solid var(--border-soft);
+  }
+  .preset-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .preset {
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    background: var(--bg-default); border: 1px solid var(--slate-7); color: var(--text-2);
+    padding: 6px 15px; border-radius: var(--r-pill); cursor: pointer;
+  }
+  .preset:hover { color: var(--text); background: var(--bg-element); }
+  .preset[aria-pressed="true"] { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-text); }
+
+  .intake-body { padding: 32px; display: grid; gap: 24px; }
+  .field { display: grid; gap: 8px; }
+  .field-label { font-size: 14px; font-weight: 500; color: var(--text); }
+  .field-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .counter { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+  .counter[data-over="true"] { color: var(--danger-text); }
+
+  .intake-body input, .intake-body select, .intake-body textarea {
+    font-family: inherit; font-size: 16px; color: var(--text);
+    background: var(--bg-default); border: 1px solid var(--slate-7);
+    border-radius: 10px; padding: 12px 14px; width: 100%; box-sizing: border-box;
+  }
+  .intake-body textarea { min-height: 116px; resize: vertical; line-height: 1.6; }
+  .intake-body input:focus, .intake-body select:focus, .intake-body textarea:focus {
+    border-color: var(--link); outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--link) 18%, transparent);
+  }
+  .hint { font-size: 13.5px; color: var(--text-3); }
+
+  .two-up { display: grid; gap: 24px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .two-up { grid-template-columns: 1fr; } }
+
+  .intake-foot {
+    padding: 20px 32px; background: var(--bg-subtle); border-top: 1px solid var(--border-soft);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+  }
+  .primary-btn {
+    font-family: inherit; font-size: 15px; font-weight: 600;
+    background: var(--btn-bg); color: var(--btn-text); border: 1px solid var(--btn-bg);
+    padding: 11px 26px; border-radius: var(--r-pill); cursor: pointer; box-shadow: var(--shadow-xs);
+  }
+  .primary-btn:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
+  .primary-btn:disabled { opacity: 0.45; cursor: default; }
+  .foot-note { font-size: 14px; color: var(--text-3); }
+
+  /* ============================================================
+     results
+     ============================================================ */
+
+  .results { padding: 56px 0 40px; }
+  .results[hidden] { display: none; }
+
+  .rail-grid { display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 0 40px; }
+  @media (max-width: 900px) { .rail-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .rail { padding-top: 4px; }
+  @media (max-width: 900px) { .rail { display: none; } }
+  .rail-stop {
+    display: flex; align-items: center; gap: 11px;
+    padding: 9px 0; font-size: 14px; color: var(--text-4);
+  }
+  .rail-dot {
+    width: 9px; height: 9px; border-radius: 50%; flex: none;
+    background: var(--slate-6); transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .rail-stop[data-state="active"] { color: var(--text); font-weight: 500; }
+  .rail-stop[data-state="active"] .rail-dot { background: var(--dot); transform: scale(1.5); }
+  .rail-stop[data-state="done"] { color: var(--text-2); }
+  .rail-stop[data-state="done"] .rail-dot { background: var(--dot); }
+  .rail-stop:nth-child(1) { --dot: var(--app-cyan); }
+  .rail-stop:nth-child(2) { --dot: var(--app-indigo); }
+  .rail-stop:nth-child(3) { --dot: var(--app-purple); }
+  .rail-stop:nth-child(4) { --dot: var(--app-orange); }
+  .rail-stop:nth-child(5) { --dot: var(--app-gold); }
+  @media (prefers-reduced-motion: reduce) {
+    .rail-dot { transition: none; }
+    .rail-stop[data-state="active"] .rail-dot { transform: none; }
+  }
+
+  .stream { display: grid; gap: 44px; align-content: start; }
+
+  /* ticker */
+
+  .ticker { display: grid; gap: 10px; font-size: 14.5px; color: var(--text-3); }
+  .tick { display: flex; gap: 11px; align-items: center; }
+  .tick-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--slate-6); flex: none; }
+  .tick[data-state="active"] { color: var(--text); }
+  .tick[data-state="active"] .tick-dot { background: var(--link); animation: pulse 1.1s ease-in-out infinite; }
+  .tick[data-state="done"] { color: var(--text-2); }
+  .tick[data-state="done"] .tick-dot { background: var(--success-solid); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+  @media (prefers-reduced-motion: reduce) { .tick[data-state="active"] .tick-dot { animation: none; } }
+
+  /* blocks */
+
+  .block { animation: rise 0.36s cubic-bezier(0.2,0.7,0.3,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .block { animation: none; } }
+
+  .block-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+  .block-head h2 { font-size: 15px; font-weight: 600; letter-spacing: -0.1px; color: var(--text); }
+
+  /* understanding */
+
+  .understanding { display: grid; gap: 18px; }
+  .restated { font-size: 22px; line-height: 1.45; letter-spacing: -0.3px; max-width: var(--read); text-wrap: pretty; }
+  .facets { display: flex; flex-wrap: wrap; gap: 8px; }
+  .facet {
+    font-size: 13.5px; background: var(--bg-element); color: var(--text-2);
+    padding: 5px 13px; border-radius: var(--r-pill);
+  }
+  .facet b { color: var(--text); font-weight: 600; }
+
+  /* verdict */
+
+  .verdict { border-radius: var(--r-card); padding: 34px 32px 30px; border: 1px solid var(--border-soft); background: var(--bg-default); }
+  .verdict[data-tone="good"] { background: var(--success-bg); border-color: var(--success-border); }
+  .verdict[data-tone="caution"] { background: var(--warning-bg); border-color: var(--warning-border); }
+  .verdict[data-tone="critical"] { background: var(--danger-bg); border-color: var(--danger-border); }
+
+  .verdict-headline { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -1px; line-height: 1.14; max-width: 30ch; margin-bottom: 16px; }
+  .verdict-reasoning { max-width: var(--read); font-size: 17px; color: var(--text-2); }
+
+  /* segmented verdict scale, in Expo's rounded idiom */
+
+  .scale { margin-bottom: 28px; }
+  .scale-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+  .scale-seg {
+    height: 7px; border-radius: var(--r-pill);
+    background: color-mix(in oklab, var(--text) 12%, transparent);
+  }
+  .scale-seg[data-hit="true"] { background: var(--seg); }
+  .verdict[data-tone="good"] { --seg: var(--success-solid); }
+  .verdict[data-tone="caution"] { --seg: var(--warning-solid); }
+  .verdict[data-tone="critical"] { --seg: var(--danger-solid); }
+  .scale-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 9px; }
+  .scale-label { font-size: 12px; color: var(--text-3); text-align: center; }
+  .scale-label[data-hit="true"] { color: var(--text); font-weight: 600; }
+  @media (max-width: 640px) { .scale-label { font-size: 10.5px; } }
+  .scale-caption { font-size: 13.5px; color: var(--text-3); margin-top: 14px; max-width: 60ch; }
+
+  /* cards */
+
+  .cards { display: grid; gap: 20px; }
+  .card {
+    background: var(--bg-default); border: 1px solid var(--border-soft);
+    border-radius: var(--r-card); padding: 32px; box-shadow: var(--shadow-xs);
+  }
+  .card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; margin-bottom: 14px; }
+  .card-rank { font-size: 13.5px; color: var(--text-3); }
+  .card h3 { max-width: 34ch; margin-bottom: 12px; text-wrap: balance; }
+  .card-oneliner { max-width: var(--read); color: var(--text-2); font-size: 17px; margin-bottom: 20px; }
+
+  .fit { display: flex; align-items: center; gap: 9px; }
+  .fit-bars { display: flex; gap: 3px; }
+  .fit-bar { width: 18px; height: 6px; border-radius: var(--r-pill); background: var(--bg-hover); }
+  .fit-bar[data-on="true"] { background: var(--success-solid); }
+  .fit-name { font-size: 13px; font-weight: 500; color: var(--text-2); }
+
+  .because { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 18px; }
+  .because-lead { font-size: 13px; color: var(--text-3); margin-right: 2px; }
+  .chip {
+    font-size: 13.5px; background: var(--info-bg); color: var(--info-text);
+    padding: 4px 12px; border-radius: var(--r-pill);
+  }
+
+  .why { max-width: var(--read); margin-bottom: 22px; }
+
+  .card-split { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  @media (max-width: 780px) { .card-split { grid-template-columns: 1fr; } }
+  .sub { display: grid; gap: 10px; align-content: start; }
+  .sub-title { font-size: 13px; font-weight: 600; color: var(--text-3); }
+  .sub-list { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15.5px; color: var(--text-2); }
+  .apps { display: grid; gap: 11px; }
+  .app { font-size: 15.5px; color: var(--text-2); }
+  .app b { color: var(--text); font-weight: 600; }
+
+  .effort {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-soft);
+  }
+  .effort-badge {
+    font-size: 13px; font-weight: 500; background: var(--bg-element); color: var(--text);
+    padding: 5px 13px; border-radius: var(--r-pill); white-space: nowrap;
+  }
+  .effort-note { font-size: 15px; color: var(--text-2); flex: 1 1 22ch; }
+
+  .caveat {
+    margin-top: 18px; padding: 14px 18px; border-radius: var(--r-panel);
+    background: var(--warning-bg); border: 1px solid var(--warning-border); font-size: 15.5px;
+  }
+  .caveat-title { font-size: 13px; font-weight: 600; color: var(--warning-text); display: block; margin-bottom: 4px; }
+
+  /* evidence */
+
+  .evidence {
+    background: var(--bg-default); border: 1px solid var(--border-soft);
+    border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-xs);
+  }
+  .ev-row {
+    display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px 24px;
+    align-items: center; padding: 18px 28px; border-bottom: 1px solid var(--border-soft);
+  }
+  .ev-row:last-child { border-bottom: none; }
+  .ev-claim { font-size: 15.5px; }
+  .ev-meta { display: flex; align-items: center; gap: 10px; }
+  .ev-source { font-size: 13px; color: var(--text-3); white-space: nowrap; }
+  .conf { font-size: 12px; font-weight: 500; padding: 3px 11px; border-radius: var(--r-pill); white-space: nowrap; }
+  .conf[data-level="strong"] { background: var(--success-bg); color: var(--success-text); }
+  .conf[data-level="directional"] { background: var(--warning-bg); color: var(--warning-text); }
+  .conf[data-level="vendor"] { background: var(--bg-element); color: var(--text-3); }
+  @media (max-width: 640px) {
+    .ev-row { grid-template-columns: 1fr; padding: 16px 20px; }
+  }
+
+  /* anti-patterns */
+
+  .antipattern { display: grid; gap: 20px; }
+  .ap {
+    background: var(--bg-default); border: 1px solid var(--border-soft);
+    border-radius: var(--r-card); padding: 30px 32px; box-shadow: var(--shadow-xs);
+  }
+  .ap h3 { max-width: 34ch; margin-bottom: 12px; }
+  .ap-body { max-width: var(--read); color: var(--text-2); margin-bottom: 22px; }
+  .ap-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 780px) { .ap-split { grid-template-columns: 1fr; } }
+  .ap-cell { background: var(--bg-subtle); border-radius: var(--r-panel); padding: 18px 20px; display: grid; gap: 7px; align-content: start; }
+  .ap-cell p { font-size: 15.5px; color: var(--text-2); }
+
+  /* handoff */
+
+  .handoff {
+    background: var(--bg-default); border: 1px solid var(--border-soft);
+    border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-sm);
+  }
+  .handoff-head {
+    padding: 28px 32px; border-bottom: 1px solid var(--border-soft);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .handoff-head h3 { margin-bottom: 7px; }
+  .handoff-head p { font-size: 15.5px; color: var(--text-2); max-width: 54ch; }
+  .services { padding: 22px 32px; border-bottom: 1px solid var(--border-soft); background: var(--bg-subtle); display: grid; gap: 12px; }
+  .service-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .service {
+    font-size: 13.5px; font-weight: 500; background: var(--bg-default);
+    border: 1px solid var(--border); padding: 5px 13px; border-radius: var(--r-pill);
+  }
+  .service[data-req="true"] { background: var(--info-bg); border-color: var(--info-border); color: var(--info-text); }
+  .prompt-wrap { max-height: 420px; overflow: auto; background: var(--bg-subtle); }
+  .prompt-wrap pre {
+    margin: 0; padding: 26px 32px; font-family: var(--mono);
+    font-size: 13px; line-height: 1.72; white-space: pre; color: var(--text-2);
+  }
+
+  /* capture */
+
+  .capture {
+    background: var(--bg-element); border-radius: var(--r-card); padding: 30px 32px;
+    display: grid; gap: 14px; max-width: 62ch;
+  }
+  .capture h3 { font-size: 20px; letter-spacing: -0.4px; }
+  .capture p { font-size: 15.5px; color: var(--text-2); }
+  .capture-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .capture-row input {
+    flex: 1 1 22ch; font-family: inherit; font-size: 16px; padding: 11px 14px;
+    background: var(--bg-default); border: 1px solid var(--slate-7); color: var(--text); border-radius: 10px;
+  }
+  .capture-row input:focus { border-color: var(--link); outline: none; }
+
+  .colophon {
+    border-top: 1px solid var(--border-soft); margin-top: 80px;
+    padding: 26px 0 72px; font-size: 14px; color: var(--text-3); max-width: 72ch;
+  }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <span class="wordmark">
+      <svg viewBox="0 0 26 20" aria-hidden="true"><path d="M13 1.4 L25.2 18.6 L19.6 18.6 L13 9.2 L6.4 18.6 L0.8 18.6 Z" fill="currentColor"/></svg>
+      Expo
+    </span>
+    <span class="masthead-tool">App use case finder</span>
+    <span class="masthead-spacer"></span>
+    <button class="ghost-btn" id="theme-btn" type="button">Dark</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero shell">
+    <h1>Do I need a mobile app?</h1>
+    <p class="hero-sub">
+      With AI it has become much easier to build and maintain a mobile app. That is good news for
+      businesses and people who could use one to improve revenue, grow community, and solve real
+      problems for users. <strong>This tool decides whether you need a mobile app, and what the use
+      case might be.</strong> It will tell you when the answer is no.
+    </p>
+
+    <form class="intake" id="intake" novalidate>
+      <div class="intake-head">
+        <span class="eyebrow">Try an example</span>
+        <div class="preset-row" id="presets">
+          <button class="preset" type="button" data-persona="roastery" aria-pressed="false">Coffee roastery</button>
+          <button class="preset" type="button" data-persona="hvac" aria-pressed="false">HVAC contractor</button>
+          <button class="preset" type="button" data-persona="photographer" aria-pressed="false">Wedding photographer</button>
+        </div>
+      </div>
+
+      <div class="intake-body">
+        <div class="two-up">
+          <div class="field">
+            <label class="field-label" for="industry">Industry</label>
+            <select id="industry" name="industry">
+              <option value="">Select or choose something else</option>
+              <option value="qsr">Food and beverage, restaurants, cafés</option>
+              <option value="retail">Retail, omnichannel, grocery</option>
+              <option value="trades">Trades and home services</option>
+              <option value="fitness">Fitness, wellness, studios</option>
+              <option value="nonprofit">Nonprofit and fundraising</option>
+              <option value="faith">Church or faith community</option>
+              <option value="b2b">B2B software or field service</option>
+              <option value="health">Healthcare and clinics</option>
+              <option value="creator">Solo creator, coach, or practitioner</option>
+              <option value="events">Events, ticketing, live</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="website">Website</label>
+            <input id="website" name="website" type="url" placeholder="https://" autocomplete="url" />
+            <span class="hint">Optional. We read the page to sharpen the answer.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-top">
+            <label class="field-label" for="description">Describe what your business or project is</label>
+            <span class="counter" id="counter" data-over="false">0 / 1200</span>
+          </div>
+          <textarea id="description" name="description" maxlength="1400"
+            placeholder="Who are your customers, how often do they come back, and where does your revenue come from?"></textarea>
+          <span class="hint">The more specific you are about how often the same person comes back, the better the answer.</span>
+        </div>
+      </div>
+
+      <div class="intake-foot">
+        <button class="primary-btn" id="submit" type="submit">Get my answer</button>
+        <span class="foot-note" id="foot-note">Takes about 15 seconds.</span>
+      </div>
+    </form>
+  </section>
+
+  <section class="results shell" id="results" hidden>
+    <div class="rail-grid">
+      <nav class="rail" id="rail" aria-label="Result sections">
+        <div class="rail-stop" data-stop="understanding" data-state="idle"><span class="rail-dot"></span>What we read</div>
+        <div class="rail-stop" data-stop="verdict" data-state="idle"><span class="rail-dot"></span>Verdict</div>
+        <div class="rail-stop" data-stop="cards" data-state="idle"><span class="rail-dot"></span>Use cases</div>
+        <div class="rail-stop" data-stop="evidence" data-state="idle"><span class="rail-dot"></span>Evidence</div>
+        <div class="rail-stop" data-stop="handoff" data-state="idle"><span class="rail-dot"></span>Start building</div>
+      </nav>
+      <div class="stream" id="stream"></div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <p class="colophon">
+      Recommendations are matched against a curated library of mobile app use cases and the industry
+      research behind them. Every use case, example app, and statistic shown comes from that library,
+      not from the model. Statistics are labelled with their source and how much weight to give them.
+    </p>
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme-btn");
+  function currentIsDark() {
+    var set = root.getAttribute("data-theme");
+    return set ? set === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function syncBtn() { themeBtn.textContent = currentIsDark() ? "Light" : "Dark"; }
+  themeBtn.addEventListener("click", function () {
+    root.setAttribute("data-theme", currentIsDark() ? "light" : "dark");
+    syncBtn();
+  });
+  syncBtn();
+
+  /* ---------------- library ---------------- */
+
+  var LIBRARY = {
+    "uc.digital-loyalty": {
+      name: "Digital loyalty that replaces the punch card",
+      oneLiner: "Regulars earn and redeem in the app instead of carrying a card they lose. You finally learn who your best customers actually are.",
+      whatYouBuild: [
+        "Sign in with a phone number or Apple and Google",
+        "A stamp balance screen that is the app's home",
+        "A scannable member code for the counter",
+        "Reward unlock and redemption",
+        "One push notification: you are one visit from a reward"
+      ],
+      apps: [
+        { name: "Starbucks Rewards", note: "Stars per visit wired straight into order ahead." },
+        { name: "Sephora Beauty Insider", note: "Tiered points with real perks, not just discounts." }
+      ],
+      effort: "About a week",
+      effortNote: "The app is a weekend. Deciding the earn and burn economics so rewards do not eat your margin is the real work.",
+      evidence: ["ev.loyalty.sephora-share", "ev.qsr.starbucks-float"],
+      services: ["EAS Build", "Push credentials", "EAS Hosting", "EAS Update"]
+    },
+    "uc.order-ahead": {
+      name: "Order ahead and pay before arriving",
+      oneLiner: "Customers build their usual order, pay in the app, and skip the queue. You keep the margin instead of handing it to an aggregator.",
+      whatYouBuild: [
+        "Menu with modifiers and a saved usual order",
+        "Cart and stored card checkout",
+        "Pickup time picker that respects kitchen capacity",
+        "Order status screen and a ready for pickup push",
+        "Staff side order queue on the web"
+      ],
+      apps: [
+        { name: "Domino's", note: "Saved orders and one tap reorder with live tracking." },
+        { name: "Taco Bell", note: "Deep customisation is the reason to open the app over a kiosk." }
+      ],
+      effort: "A few weeks",
+      effortNote: "Payments and menu modifiers are where the time goes. Start with a fixed menu and no modifiers.",
+      evidence: ["ev.qsr.mobile-share", "ev.qsr.owned-app-preference"],
+      services: ["EAS Build", "EAS Hosting", "EAS Update", "EAS Submit"],
+      caveat: "Do not launch ordering without loyalty attached. Ordering alone gives people no reason to pick your app over DoorDash."
+    },
+    "uc.subscription-manage": {
+      name: "Self serve subscription management",
+      oneLiner: "Subscribers pause, skip, change grind, and update their card without emailing you. Churn drops because cancelling stops being the easiest option.",
+      whatYouBuild: [
+        "Next shipment screen with skip and pause",
+        "Plan and frequency editing",
+        "Card update flow",
+        "Delivery notifications"
+      ],
+      apps: [
+        { name: "Blue Apron", note: "Skip a week is one tap, so people skip instead of cancelling." }
+      ],
+      effort: "About a week",
+      effortNote: "Mostly a thin client over the billing provider you already use.",
+      evidence: ["ev.loyalty.prime-renewal"],
+      services: ["EAS Build", "EAS Hosting", "EAS Update"]
+    },
+    "uc.offline-field-capture": {
+      name: "Job capture that works with no signal",
+      oneLiner: "Your crew records the job, photos, parts, and a signature on site, in a basement or on a roof, and it syncs when they get bars back.",
+      whatYouBuild: [
+        "Today's assigned jobs, cached on the device",
+        "Job form that writes to local storage first",
+        "Photo capture attached to the job record",
+        "Customer signature and a PDF receipt",
+        "A sync queue with visible pending state"
+      ],
+      apps: [
+        { name: "ServiceTitan Mobile", note: "The in field invoice is the feature that pays for the app." },
+        { name: "John Deere Operations Center", note: "Treats no connectivity as the default, not the exception." }
+      ],
+      effort: "A few weeks",
+      effortNote: "Offline sync is genuinely the hard part. Scope version one to a single form and one direction of sync.",
+      evidence: ["ev.field.productivity-share", "ev.field.cost-reduction"],
+      services: ["EAS Build", "EAS Hosting", "EAS Update", "EAS Workflows"],
+      caveat: "If you already pay for a field service platform, the honest answer is to turn on their mobile app first."
+    },
+    "uc.quote-to-invoice": {
+      name: "Quote and invoice from the driveway",
+      oneLiner: "Price the job, get it approved, and take payment before leaving the site. Cash arrives days earlier and nothing gets written up from memory.",
+      whatYouBuild: [
+        "Line item builder with saved common jobs",
+        "Customer approval and signature on the device",
+        "Card or tap to pay collection",
+        "Emailed receipt and an accounting handoff"
+      ],
+      apps: [
+        { name: "Jobber", note: "Quote, approve, and collect in one visit rather than three touches." }
+      ],
+      effort: "A few weeks",
+      effortNote: "Payment provider onboarding takes longer than the screens do. Start that paperwork first.",
+      evidence: ["ev.field.cost-reduction"],
+      services: ["EAS Build", "EAS Hosting", "EAS Update"]
+    }
+  };
+
+  var EVIDENCE = {
+    "ev.qsr.starbucks-float": { claim: "Starbucks reported more than 30 million mobile users and held 1.77 billion dollars in unused pre loaded app funds in 2024.", source: "Company filings", confidence: "strong" },
+    "ev.qsr.mobile-share": { claim: "Mobile accounts for roughly 60 percent of digital restaurant orders.", source: "NPD Group", confidence: "strong" },
+    "ev.qsr.owned-app-preference": { claim: "70 percent of consumers say they prefer ordering through a restaurant's own app rather than a third party.", source: "Industry survey", confidence: "directional" },
+    "ev.loyalty.sephora-share": { claim: "Sephora Beauty Insider, at 40 to 46 million members, drives roughly 80 percent of North America sales.", source: "Company statements", confidence: "strong" },
+    "ev.loyalty.prime-renewal": { claim: "Amazon Prime members spend about twice as much as non members and renew at roughly 93 percent after the first year.", source: "Analyst estimates", confidence: "directional" },
+    "ev.field.productivity-share": { claim: "75 percent of field service companies using mobile tools report higher staff productivity.", source: "Vendor aggregation", confidence: "vendor" },
+    "ev.field.cost-reduction": { claim: "Mobile field service management can cut operational costs by up to 20 percent.", source: "Aberdeen Group", confidence: "directional" }
+  };
+
+  var ANTIPATTERNS = {
+    "ap.one-time-transaction": {
+      name: "A relationship that ends after one transaction",
+      body: "Every credible mobile business case rests on the same person coming back. When someone books you once and has no reason to return within a year, an app has nowhere to accrue value. There is no loyalty balance to build, no saved preference worth storing, and nothing worth a push notification.",
+      better: "Put the effort into a fast mobile first booking and gallery experience on the web, plus email follow up. If you want an icon on the home screen, a progressive web app gets you that without app store review.",
+      revisit: "You add mini sessions on a subscription, a print membership, or a referral programme. Anything that gives the same client a reason to open it a second time."
+    },
+    "ap.seasonal-only": {
+      name: "Demand that only exists a few weeks a year",
+      body: "Wedding work concentrates into a short season, and the client relationship is intense for a few months and then over. An installed app has to survive the ten quiet months, and it will be deleted long before the next booking.",
+      better: "A shared gallery link and a scheduled email sequence carry the same information without asking anyone to install anything.",
+      revisit: "You move into a category with year round repeat demand, such as family or newborn sessions on a recurring plan."
+    }
+  };
+
+  var PERSONAS = {
+    roastery: {
+      industry: "qsr",
+      website: "https://rosecityroasters.example",
+      description: "I run a small coffee roastery and cafe in Portland. We have a lot of regulars, and most of them order the same drink every morning. We are on DoorDash but the fees are brutal. We also sell beans by subscription to about 400 people.",
+      siteRead: true,
+      understanding: {
+        restated: "A neighbourhood coffee roastery and café with a daily regular base, an unprofitable third party delivery channel, and a 400 person bean subscription running alongside it.",
+        facets: [["Return cadence", "Daily"], ["Revenue", "Transactional and subscription"], ["Serves", "Repeat customers"], ["Input", "Clear"]]
+      },
+      verdict: { position: 5, tone: "good", headline: "Yes. Three use cases fit, and one of them pays for the build on its own.", reasoning: "You have the thing that makes a mobile app work and that most businesses do not have, which is the same person returning daily. That turns loyalty from a gimmick into a habit loop, and it gives you a route off DoorDash without losing the customers you acquired there.", confidence: "high" },
+      recs: [
+        { id: "uc.digital-loyalty", rank: 1, fit: "core", signals: ["we have regulars", "customers order the same thing every time"], why: "Your regulars already behave like members, you just have no way to recognise them. Loyalty is also the lever that moves a DoorDash customer onto your own channel, because the reward only exists in your app." },
+        { id: "uc.order-ahead", rank: 2, fit: "core", signals: ["DoorDash fees are brutal", "people queue at the counter"], why: "The morning rush is where you lose both throughput and margin. Order ahead turns your counter into pickup only at peak, and every order that moves off the aggregator keeps its full margin." },
+        { id: "uc.subscription-manage", rank: 3, fit: "strong", signals: ["we sell beans by subscription"], why: "400 subscribers is enough that support email is already a cost. Letting people skip a week instead of emailing you to cancel is usually the cheapest churn reduction available." }
+      ],
+      appName: "Rose City Roasters", startWith: "uc.digital-loyalty"
+    },
+    hvac: {
+      industry: "trades",
+      website: "https://example-hvac.example",
+      description: "We are an HVAC company with 6 technicians doing installs and service calls around the metro. The techs still use paper job sheets and there is no signal in half the basements they work in. Everything gets typed up again back at the office and invoices go out days later.",
+      siteRead: false,
+      understanding: {
+        restated: "A six technician HVAC install and service business, running paper job sheets in the field, re entering everything at the office, and invoicing several days after the work is done.",
+        facets: [["Return cadence", "Daily"], ["Revenue", "Transactional and service"], ["Serves", "Field workers"], ["Input", "Clear"]]
+      },
+      verdict: { position: 4, tone: "good", headline: "Yes, and the case here is cost, not customer acquisition.", reasoning: "Your app has an internal user, not a consumer one. Six technicians doing double entry is a measurable daily cost, and the days between finishing a job and sending the invoice is working capital sitting in a van. Both of those are what a mobile app is genuinely good at removing.", confidence: "high" },
+      recs: [
+        { id: "uc.offline-field-capture", rank: 1, fit: "core", signals: ["our techs still use paper", "no signal in basements", "double entry back at the office"], why: "This is the whole job. Your constraint is connectivity, which is exactly what rules out a web based form and makes a real app the right tool rather than a nice to have." },
+        { id: "uc.quote-to-invoice", rank: 2, fit: "strong", signals: ["invoices go out days later"], why: "Once the job record already exists on the device, invoicing from the driveway is a small addition with a direct cash flow effect. Build it second, on top of the capture work." }
+      ],
+      appName: "Field Ops", startWith: "uc.offline-field-capture"
+    },
+    photographer: {
+      industry: "creator",
+      website: "",
+      description: "I am a wedding photographer working on my own. I shoot around 20 weddings a year, mostly between May and September. Couples find me through Instagram and referrals, I shoot their wedding, deliver a gallery, and that is usually the end of it.",
+      siteRead: false,
+      understanding: {
+        restated: "A solo wedding photographer shooting roughly 20 events a year, concentrated in a five month season, with a client relationship that completes at gallery delivery.",
+        facets: [["Return cadence", "Once"], ["Revenue", "Project fees"], ["Serves", "One time clients"], ["Input", "Clear"]]
+      },
+      verdict: { position: 1, tone: "critical", headline: "Not right now. An app would cost you real money and give your clients nothing they need.", reasoning: "This is not a judgement about your business, it is a judgement about the shape of the relationship. A mobile app earns its keep when the same person opens it repeatedly. Your clients hire you once, in a season, and are done. Two things in the library rule this out, and both would have to change first.", confidence: "high" },
+      antipatterns: ["ap.one-time-transaction", "ap.seasonal-only"],
+      recs: [], appName: "", startWith: null
+    }
+  };
+
+  var SERVICE_NOTES = {
+    "EAS Build": "Required. Push and payments use native code, so create a development build early.",
+    "Push credentials": "Run eas credentials and let EAS manage APNs and FCM.",
+    "EAS Hosting": "Host the server side as Expo Router API routes and deploy with eas deploy.",
+    "EAS Update": "Ship JavaScript fixes without an app store review.",
+    "EAS Submit": "For App Store and Play Store submission when phase one is ready.",
+    "EAS Workflows": "Add continuous integration under .eas/workflows for a multi phase build."
+  };
+
+  function wrap(text, width) {
+    var words = text.split(" "), out = [], line = "";
+    words.forEach(function (w) {
+      if ((line + " " + w).trim().length > width) { out.push(line.trim()); line = w; }
+      else { line += " " + w; }
+    });
+    if (line.trim()) { out.push(line.trim()); }
+    return out.join("\n");
+  }
+
+  function buildPrompt(p) {
+    var phases = p.recs.slice(0, 3);
+    var services = [];
+    phases.forEach(function (r) {
+      LIBRARY[r.id].services.forEach(function (s) { if (services.indexOf(s) === -1) { services.push(s); } });
+    });
+    var slug = p.appName.replace(/[^A-Za-z0-9]/g, "");
+    var L = [];
+    L.push("# Build: " + p.appName + " mobile app");
+    L.push("");
+    L.push("I want to build a mobile app for my business using Expo. Use React Native with");
+    L.push("Expo Router, and target iOS, Android, and web from one codebase. Explain your");
+    L.push("choices briefly as you go.");
+    L.push("");
+    L.push("## Step 1. Connect the Expo MCP server first");
+    L.push("");
+    L.push("Before writing any code, connect to Expo's MCP server so you have current SDK");
+    L.push("documentation and can install the right library versions.");
+    L.push("");
+    L.push("    claude mcp add --transport http expo https://mcp.expo.dev/mcp");
+    L.push("");
+    L.push("Then run /mcp in this session and authenticate with my Expo account. Once");
+    L.push("connected, use the learn tool to load current Expo practices before scaffolding.");
+    L.push("Throughout, use search_documentation and read_documentation rather than relying");
+    L.push("on your training data. Expo ships frequently.");
+    L.push("");
+    L.push("## Step 2. Scaffold");
+    L.push("");
+    L.push("    npx create-expo-app@latest " + slug + " --template default@sdk-57");
+    L.push("    cd " + slug);
+    L.push("");
+    L.push("Use bun from here. Install with bunx expo install <package>, never bare bun add,");
+    L.push("so versions stay compatible with SDK 57.");
+    L.push("");
+    L.push("Then enable local MCP capabilities so you can drive the simulator and screenshot");
+    L.push("your own work:");
+    L.push("");
+    L.push("    bunx expo install expo-mcp --dev");
+    L.push("    EXPO_UNSTABLE_MCP_SERVER=1 bunx expo start");
+    L.push("");
+    L.push("## Step 3. What we are building");
+    L.push("");
+    L.push(wrap(p.understanding.restated, 74));
+    L.push("");
+    L.push("Build in this order. Ship phase one before starting phase two.");
+    L.push("");
+    phases.forEach(function (r, i) {
+      var uc = LIBRARY[r.id];
+      L.push("### Phase " + (i + 1) + ". " + uc.name);
+      uc.whatYouBuild.forEach(function (s) { L.push("  - " + s); });
+      L.push("");
+    });
+    L.push("## Step 4. Services to configure");
+    L.push("");
+    services.forEach(function (s) { L.push("- " + s + ". " + SERVICE_NOTES[s]); });
+    L.push("");
+    L.push("Note that API routes on EAS Hosting run on Cloudflare Workers, so use Web APIs");
+    L.push("only, no Node file system, and a cloud database rather than local files.");
+    L.push("");
+    L.push("## Step 5. How to work with me");
+    L.push("");
+    L.push("Inline style objects plus module level colour constants. No Tailwind, no");
+    L.push("NativeWind. Use expo-image for all images. Routes in app, components in");
+    L.push("components, kebab case filenames. TypeScript strict. Take a screenshot after");
+    L.push("each screen so I can see it working. Never put secrets in the client, read them");
+    L.push("from API routes via EAS environment variables.");
+    L.push("");
+    L.push("Start with step 1. Confirm the MCP server is connected before scaffolding.");
+    return { markdown: L.join("\n"), services: services };
+  }
+
+  /* ---------------- render ---------------- */
+
+  var stream = document.getElementById("stream");
+  var results = document.getElementById("results");
+  var rail = document.getElementById("rail");
+  var submit = document.getElementById("submit");
+  var footNote = document.getElementById("foot-note");
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) { n.className = cls; }
+    if (html !== undefined) { n.innerHTML = html; }
+    return n;
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function setStop(name, state) {
+    var s = rail.querySelector('[data-stop="' + name + '"]');
+    if (s) { s.setAttribute("data-state", state); }
+  }
+  function block(title, note) {
+    var b = el("div", "block");
+    var h = el("div", "block-head");
+    h.appendChild(el("h2", null, esc(title)));
+    if (note) { h.appendChild(el("span", "eyebrow", esc(note))); }
+    b.appendChild(h);
+    return b;
+  }
+
+  var SCALE = ["Probably not", "Not yet", "Start small", "Yes", "Strong yes"];
+  var FIT = { core: 3, strong: 2, "worth-considering": 1 };
+  var FIT_NAME = { core: "Core fit", strong: "Strong fit", "worth-considering": "Worth considering" };
+
+  function renderTicker() {
+    var b = el("div", "block");
+    var t = el("div", "ticker");
+    t.id = "ticker";
+    [["read", "Reading your description"], ["site", "Fetching your website"],
+     ["match", "Checking 24 use cases and 8 anti patterns"], ["rank", "Ranking and writing up"]
+    ].forEach(function (pair) {
+      var row = el("div", "tick");
+      row.setAttribute("data-stage", pair[0]);
+      row.setAttribute("data-state", "idle");
+      row.appendChild(el("span", "tick-dot"));
+      row.appendChild(el("span", null, esc(pair[1])));
+      t.appendChild(row);
+    });
+    b.appendChild(t);
+    return b;
+  }
+
+  function renderUnderstanding(p) {
+    var b = block("What we read", p.siteRead ? "Description and website" : "Description only");
+    var u = el("div", "understanding");
+    u.appendChild(el("p", "restated", esc(p.understanding.restated)));
+    var f = el("div", "facets");
+    p.understanding.facets.forEach(function (pair) {
+      f.appendChild(el("span", "facet", esc(pair[0]) + " <b>" + esc(pair[1]) + "</b>"));
+    });
+    u.appendChild(f);
+    if (!p.siteRead) {
+      u.appendChild(el("p", "hint", "We could not read a website, so this is based on your description alone."));
+    }
+    b.appendChild(u);
+    return b;
+  }
+
+  function renderVerdict(p) {
+    var b = block("Verdict", "Confidence " + p.verdict.confidence);
+    var v = el("div", "verdict");
+    v.setAttribute("data-tone", p.verdict.tone);
+
+    var scale = el("div", "scale");
+    var track = el("div", "scale-track");
+    var labels = el("div", "scale-labels");
+    SCALE.forEach(function (name, i) {
+      var hit = (i + 1) === p.verdict.position ? "true" : "false";
+      var seg = el("div", "scale-seg");
+      seg.setAttribute("data-hit", hit);
+      track.appendChild(seg);
+      var lab = el("div", "scale-label", esc(name));
+      lab.setAttribute("data-hit", hit);
+      labels.appendChild(lab);
+    });
+    scale.appendChild(track);
+    scale.appendChild(labels);
+    scale.appendChild(el("p", "scale-caption",
+      "Reading " + p.verdict.position + " of 5. This scale runs both ways, and about a third of the businesses we see land in the left half."));
+    v.appendChild(scale);
+
+    v.appendChild(el("h2", "verdict-headline", esc(p.verdict.headline)));
+    v.appendChild(el("p", "verdict-reasoning", esc(p.verdict.reasoning)));
+    b.appendChild(v);
+    return b;
+  }
+
+  function renderCards(p) {
+    var b = block("Use cases that fit", p.recs.length + " matched");
+    var w = el("div", "cards");
+    p.recs.forEach(function (r) {
+      var uc = LIBRARY[r.id];
+      var c = el("div", "card");
+
+      var top = el("div", "card-top");
+      top.appendChild(el("span", "card-rank", "Recommendation " + r.rank + " of " + p.recs.length));
+      var fit = el("div", "fit");
+      var bars = el("div", "fit-bars");
+      for (var i = 1; i <= 3; i++) {
+        var bar = el("span", "fit-bar");
+        bar.setAttribute("data-on", i <= FIT[r.fit] ? "true" : "false");
+        bars.appendChild(bar);
+      }
+      fit.appendChild(bars);
+      fit.appendChild(el("span", "fit-name", FIT_NAME[r.fit]));
+      top.appendChild(fit);
+      c.appendChild(top);
+
+      c.appendChild(el("h3", null, esc(uc.name)));
+      c.appendChild(el("p", "card-oneliner", esc(uc.oneLiner)));
+
+      var bec = el("div", "because");
+      bec.appendChild(el("span", "because-lead", "Because you said"));
+      r.signals.forEach(function (s) { bec.appendChild(el("span", "chip", esc(s))); });
+      c.appendChild(bec);
+
+      c.appendChild(el("p", "why", esc(r.why)));
+
+      var split = el("div", "card-split");
+      var left = el("div", "sub");
+      left.appendChild(el("span", "sub-title", "What you build"));
+      var ul = el("ul", "sub-list");
+      uc.whatYouBuild.forEach(function (s) { ul.appendChild(el("li", null, esc(s))); });
+      left.appendChild(ul);
+      split.appendChild(left);
+
+      var right = el("div", "sub");
+      right.appendChild(el("span", "sub-title", "Apps doing this well"));
+      var apps = el("div", "apps");
+      uc.apps.forEach(function (a) { apps.appendChild(el("div", "app", "<b>" + esc(a.name) + "</b> " + esc(a.note))); });
+      right.appendChild(apps);
+      split.appendChild(right);
+      c.appendChild(split);
+
+      var eff = el("div", "effort");
+      eff.appendChild(el("span", "effort-badge", esc(uc.effort)));
+      eff.appendChild(el("span", "effort-note", esc(uc.effortNote)));
+      c.appendChild(eff);
+
+      if (uc.caveat) {
+        var cav = el("div", "caveat");
+        cav.appendChild(el("span", "caveat-title", "Worth knowing"));
+        cav.appendChild(el("span", null, esc(uc.caveat)));
+        c.appendChild(cav);
+      }
+      w.appendChild(c);
+    });
+    b.appendChild(w);
+    return b;
+  }
+
+  function renderAntipatterns(p) {
+    var b = block("Why not, and what would change it", p.antipatterns.length + " reasons");
+    var w = el("div", "antipattern");
+    p.antipatterns.forEach(function (id) {
+      var ap = ANTIPATTERNS[id];
+      var n = el("div", "ap");
+      n.appendChild(el("h3", null, esc(ap.name)));
+      n.appendChild(el("p", "ap-body", esc(ap.body)));
+      var split = el("div", "ap-split");
+      var c1 = el("div", "ap-cell");
+      c1.appendChild(el("span", "sub-title", "Do this instead"));
+      c1.appendChild(el("p", null, esc(ap.better)));
+      var c2 = el("div", "ap-cell");
+      c2.appendChild(el("span", "sub-title", "Come back when"));
+      c2.appendChild(el("p", null, esc(ap.revisit)));
+      split.appendChild(c1); split.appendChild(c2);
+      n.appendChild(split);
+      w.appendChild(n);
+    });
+    b.appendChild(w);
+    return b;
+  }
+
+  function renderEvidence(p) {
+    var ids = [];
+    p.recs.forEach(function (r) {
+      LIBRARY[r.id].evidence.forEach(function (e) { if (ids.indexOf(e) === -1) { ids.push(e); } });
+    });
+    if (!ids.length) { return null; }
+    var b = block("Evidence behind these", "Sourced, with weight");
+    var t = el("div", "evidence");
+    ids.forEach(function (id) {
+      var ev = EVIDENCE[id];
+      var row = el("div", "ev-row");
+      row.appendChild(el("p", "ev-claim", esc(ev.claim)));
+      var meta = el("div", "ev-meta");
+      var conf = el("span", "conf", ev.confidence === "vendor" ? "Vendor sourced" : ev.confidence === "directional" ? "Directional" : "Well sourced");
+      conf.setAttribute("data-level", ev.confidence);
+      meta.appendChild(conf);
+      meta.appendChild(el("span", "ev-source", esc(ev.source)));
+      row.appendChild(meta);
+      t.appendChild(row);
+    });
+    b.appendChild(t);
+    return b;
+  }
+
+  function renderHandoff(p) {
+    var built = buildPrompt(p);
+    var b = block("Start building", "Generated for your use cases");
+    var h = el("div", "handoff");
+
+    var head = el("div", "handoff-head");
+    var left = el("div");
+    left.appendChild(el("h3", null, "Your starting prompt"));
+    left.appendChild(el("p", null, "Paste this into Claude Code, Cursor, or Codex. It connects the Expo MCP server, scaffolds on SDK 57, and configures the services these use cases need."));
+    head.appendChild(left);
+    var btn = el("button", "primary-btn", "Copy prompt");
+    btn.type = "button";
+    head.appendChild(btn);
+    h.appendChild(head);
+
+    var svc = el("div", "services");
+    svc.appendChild(el("span", "sub-title", "Services this needs"));
+    var grid = el("div", "service-grid");
+    built.services.forEach(function (s) {
+      var n = el("span", "service", esc(s));
+      if (s === "EAS Build" || s === "EAS Hosting") { n.setAttribute("data-req", "true"); }
+      grid.appendChild(n);
+    });
+    svc.appendChild(grid);
+    h.appendChild(svc);
+
+    var pw = el("div", "prompt-wrap");
+    pw.appendChild(el("pre", null, esc(built.markdown)));
+    h.appendChild(pw);
+    b.appendChild(h);
+
+    btn.addEventListener("click", function () {
+      var done = function () {
+        btn.textContent = "Copied";
+        window.setTimeout(function () { btn.textContent = "Copy prompt"; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(built.markdown).then(done, done);
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = built.markdown;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch (e) { /* clipboard unavailable */ }
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+    return b;
+  }
+
+  function renderCapture(p) {
+    var b = el("div", "block");
+    var c = el("div", "capture");
+    c.appendChild(el("h3", null, p.recs.length ? "Want this as an email?" : "Want a nudge when this changes?"));
+    c.appendChild(el("p", null, p.recs.length
+      ? "We will send the use cases, the evidence, and the starting prompt so you have it when you are ready to build."
+      : "We will send the two things that would make an app worth building for you, in case your model changes."));
+    var row = el("div", "capture-row");
+    var input = document.createElement("input");
+    input.type = "email";
+    input.placeholder = "you@yourbusiness.com";
+    input.setAttribute("aria-label", "Email address");
+    var send = el("button", "primary-btn", "Send it");
+    send.type = "button";
+    row.appendChild(input); row.appendChild(send);
+    c.appendChild(row);
+    var msg = el("p", "hint", "");
+    c.appendChild(msg);
+    send.addEventListener("click", function () {
+      if (!input.value || input.value.indexOf("@") === -1) {
+        msg.textContent = "Add an email address and we will send it over.";
+        input.focus();
+        return;
+      }
+      msg.textContent = "Sent. Check your inbox in a minute.";
+      input.disabled = true; send.disabled = true;
+    });
+    b.appendChild(c);
+    return b;
+  }
+
+  /* ---------------- simulated stream ---------------- */
+
+  var timers = [];
+  function at(ms, fn) { timers.push(window.setTimeout(fn, ms)); }
+  function setTick(stage, state) {
+    var t = document.getElementById("ticker");
+    if (!t) { return; }
+    var row = t.querySelector('[data-stage="' + stage + '"]');
+    if (row) { row.setAttribute("data-state", state); }
+  }
+  function tickLabel(stage, text) {
+    var t = document.getElementById("ticker");
+    if (!t) { return; }
+    var row = t.querySelector('[data-stage="' + stage + '"]');
+    if (row) { row.querySelector("span:last-child").textContent = text; }
+  }
+
+  function run(p) {
+    timers.forEach(function (t) { window.clearTimeout(t); });
+    timers = [];
+    stream.innerHTML = "";
+    ["understanding", "verdict", "cards", "evidence", "handoff"].forEach(function (s) { setStop(s, "idle"); });
+    rail.querySelector('[data-stop="evidence"]').lastChild.textContent = "Evidence";
+    rail.querySelector('[data-stop="handoff"]').lastChild.textContent = "Start building";
+    results.hidden = false;
+    submit.disabled = true;
+    footNote.textContent = "Working. This is a simulated response.";
+
+    stream.appendChild(renderTicker());
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    var hasSite = !!p.website;
+
+    at(140, function () { setTick("read", "active"); });
+    at(950, function () {
+      setTick("read", "done");
+      if (hasSite) { setTick("site", "active"); }
+      else { tickLabel("site", "No website given, skipping"); setTick("site", "done"); setTick("match", "active"); }
+    });
+    if (hasSite) {
+      at(2500, function () {
+        if (!p.siteRead) { tickLabel("site", "Website did not respond in time, continuing"); }
+        setTick("site", "done");
+        setTick("match", "active");
+      });
+    }
+
+    var base = hasSite ? 2500 : 950;
+
+    at(base + 2200, function () {
+      setTick("match", "done"); setTick("rank", "active");
+      setStop("understanding", "active");
+      stream.appendChild(renderUnderstanding(p));
+    });
+    at(base + 3500, function () {
+      setStop("understanding", "done"); setStop("verdict", "active");
+      stream.appendChild(renderVerdict(p));
+    });
+    at(base + 4800, function () {
+      setStop("verdict", "done"); setStop("cards", "active");
+      stream.appendChild(p.recs.length ? renderCards(p) : renderAntipatterns(p));
+    });
+    at(base + 6000, function () {
+      setStop("cards", "done");
+      var ev = renderEvidence(p);
+      if (ev) {
+        setStop("evidence", "active");
+        stream.appendChild(ev);
+        at(600, function () { setStop("evidence", "done"); });
+      } else {
+        setStop("evidence", "done");
+        rail.querySelector('[data-stop="evidence"]').lastChild.textContent = "Not applicable";
+      }
+    });
+    at(base + 7000, function () {
+      setTick("rank", "done");
+      if (p.recs.length) {
+        setStop("handoff", "active");
+        stream.appendChild(renderHandoff(p));
+        at(500, function () { setStop("handoff", "done"); });
+      } else {
+        setStop("handoff", "done");
+        rail.querySelector('[data-stop="handoff"]').lastChild.textContent = "Nothing to build";
+      }
+      stream.appendChild(renderCapture(p));
+      submit.disabled = false;
+      footNote.textContent = "Simulated response. Pick another example to compare.";
+    });
+  }
+
+  /* ---------------- form ---------------- */
+
+  var industry = document.getElementById("industry");
+  var website = document.getElementById("website");
+  var description = document.getElementById("description");
+  var counter = document.getElementById("counter");
+  var presets = document.getElementById("presets");
+  var activePersona = null;
+
+  function updateCounter() {
+    var n = description.value.length;
+    counter.textContent = n + " / 1200";
+    counter.setAttribute("data-over", n > 1200 ? "true" : "false");
+  }
+  description.addEventListener("input", function () {
+    updateCounter();
+    if (activePersona) {
+      activePersona = null;
+      Array.prototype.forEach.call(presets.querySelectorAll(".preset"), function (b) { b.setAttribute("aria-pressed", "false"); });
+    }
+  });
+  updateCounter();
+
+  presets.addEventListener("click", function (e) {
+    var btn = e.target.closest(".preset");
+    if (!btn) { return; }
+    var key = btn.getAttribute("data-persona");
+    var p = PERSONAS[key];
+    activePersona = key;
+    Array.prototype.forEach.call(presets.querySelectorAll(".preset"), function (b) {
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+    industry.value = p.industry;
+    website.value = p.website;
+    description.value = p.description;
+    updateCounter();
+  });
+
+  document.getElementById("intake").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (description.value.trim().length < 20) {
+      footNote.textContent = "Tell us a bit more first, at least a sentence or two.";
+      description.focus();
+      return;
+    }
+    run(activePersona ? PERSONAS[activePersona] : PERSONAS.roastery);
+  });
+})();
+</script>

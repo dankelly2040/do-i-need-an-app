@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Do I need a mobile app?",
+    "slug": "do-i-need-an-app",
+    "owner": "dannymanning",
+    "web": {
+      "output": "static"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a80cc5f2-15f5-49d6-bcd7-84756484c740"
+      }
+    }
+  }
+}

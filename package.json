@@ -1,0 +1,11 @@
+{
+  "name": "do-i-need-an-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "deploy": "node build.mjs && eas deploy --prod",
+    "deploy:preview": "node build.mjs && eas deploy"
+  }
+}
